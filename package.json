@@ -1,0 +1,62 @@
+{
+  "name": "onworknewon-studio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Webapp analyzer + UI/UX redesign studio driven by Claude Code skills and MCP browser tools.",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"Add your framework's dev command here (e.g. next dev, vite)\" && exit 1",
+    "build": "echo \"Add your framework's build command here\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test --grep @a11y",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
+  },
+  "dependencies": {
+    "recharts": "^2.15.0",
+    "@nivo/core": "^0.88.0",
+    "@nivo/line": "^0.88.0",
+    "@nivo/bar": "^0.88.0",
+    "@nivo/pie": "^0.88.0",
+    "echarts": "^5.5.0",
+    "echarts-for-react": "^3.0.2",
+    "framer-motion": "^11.11.0",
+    "lottie-react": "^2.4.0",
+    "tsparticles": "^3.5.0",
+    "@tsparticles/react": "^3.0.0",
+    "lucide-react": "^0.451.0",
+    "@iconify/react": "^5.0.2",
+    "@heroicons/react": "^2.1.5",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "class-variance-authority": "^0.7.0",
+    "@radix-ui/react-accordion": "^1.2.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
+    "@radix-ui/react-tabs": "^1.1.1",
+    "@radix-ui/react-toast": "^1.2.2",
+    "@radix-ui/react-tooltip": "^1.1.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "eslint": "^9.13.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "vitest": "^2.1.0",
+    "@playwright/test": "^1.48.0",
+    "@axe-core/playwright": "^4.10.0",
+    "storybook": "^8.3.0",
+    "@storybook/react-vite": "^8.3.0",
+    "chromatic": "^11.12.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

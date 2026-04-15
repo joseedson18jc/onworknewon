@@ -1,0 +1,23 @@
+node_modules/
+dist/
+build/
+out/
+.next/
+.turbo/
+.cache/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Playwright / Storybook artifacts
+test-results/
+playwright-report/
+storybook-static/
+
+# Reports — keep markdown, ignore raw screenshots over threshold
+reports/raw/
+reports/**/*.webm
+reports/**/*.zip
