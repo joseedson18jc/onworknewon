@@ -16,6 +16,8 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "recharts": "^2.15.0",
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
