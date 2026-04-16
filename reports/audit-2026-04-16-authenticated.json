@@ -1,0 +1,394 @@
+{
+  "url": "https://ai-rudder-panel-josemercadogc18-1904s-projects.vercel.app",
+  "capturedAt": "2026-04-16T02:51:04.805Z",
+  "bypass": "sessionStorage.rudder_auth=1",
+  "console": {
+    "errors": [],
+    "warnings": []
+  },
+  "network": {
+    "failed": [],
+    "slow": [],
+    "requestCount": 6,
+    "totalBytes": 987904
+  },
+  "webVitals": {
+    "lcp": 1896,
+    "cls": 0.392,
+    "fcp": 1288,
+    "ttfb": 905,
+    "longTasks": 7
+  },
+  "a11y": {
+    "landmarks": [
+      {
+        "tag": "aside",
+        "role": null,
+        "id": "sidebar"
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "id": ""
+      },
+      {
+        "tag": "div",
+        "role": "dialog",
+        "id": "aiDrawer"
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": "Inteligência para cada conversa comercial.\n        Intelligence for every sales conversation."
+      },
+      {
+        "level": 2,
+        "text": "Visão geralOverview"
+      },
+      {
+        "level": 2,
+        "text": "Portfolio BreakdownPortfolio Breakdown"
+      },
+      {
+        "level": 4,
+        "text": "Por Tier ICPBy ICP Tier"
+      },
+      {
+        "level": 4,
+        "text": "Por SetorBy Sector"
+      },
+      {
+        "level": 4,
+        "text": "Faixa de Ticket (US$K/ano · top 10)Deal Size Range ($K/yr · top 10)"
+      },
+      {
+        "level": 2,
+        "text": "Ranking ICPICP Ranking"
+      },
+      {
+        "level": 3,
+        "text": "As 10 contas que movem o trimestre.The 10 accounts that move the quarter."
+      },
+      {
+        "level": 2,
+        "text": "Decisores -chaveKey Decision Makers"
+      },
+      {
+        "level": 3,
+        "text": "Quem manda em cada conta.Who holds the power in each account."
+      },
+      {
+        "level": 2,
+        "text": "Briefings prioritáriosPriority briefings"
+      },
+      {
+        "level": 3,
+        "text": "Vivo"
+      },
+      {
+        "level": 3,
+        "text": "Inter"
+      },
+      {
+        "level": 3,
+        "text": "Stone"
+      },
+      {
+        "level": 3,
+        "text": "Todas as contas no radarAll accounts on radar"
+      },
+      {
+        "level": 5,
+        "text": "Enriquecimento em massa via Surfe APIBulk Surfe API enrichment"
+      },
+      {
+        "level": 2,
+        "text": "AI Co-Pilot"
+      },
+      {
+        "level": 3,
+        "text": "Seu copiloto para cada conversa comercial.Your co-pilot for every sales conversation."
+      },
+      {
+        "level": 4,
+        "text": "Email WriterEmail Writer"
+      },
+      {
+        "level": 4,
+        "text": "IcebreakerIcebreaker"
+      },
+      {
+        "level": 4,
+        "text": "LinkedIn ReplyLinkedIn Reply"
+      },
+      {
+        "level": 4,
+        "text": "WhatsApp ScriptWhatsApp Script"
+      },
+      {
+        "level": 4,
+        "text": "BattlecardBattlecard"
+      },
+      {
+        "level": 4,
+        "text": "Objection HandlerObjection Handler"
+      },
+      {
+        "level": 4,
+        "text": "DISC ProfileDISC Profile"
+      },
+      {
+        "level": 4,
+        "text": "Business CaseBusiness Case"
+      },
+      {
+        "level": 4,
+        "text": "Meeting PrepMeeting Prep"
+      },
+      {
+        "level": 4,
+        "text": "RoleplayRoleplay"
+      },
+      {
+        "level": 2,
+        "text": "Cadência inteligenteSmart cadence"
+      },
+      {
+        "level": 2,
+        "text": "Próximos passosNext steps"
+      },
+      {
+        "level": 2,
+        "text": "Surfe · Prospector"
+      },
+      {
+        "level": 3,
+        "text": "Prospecção inteligente — em tempo real.Smart prospecting — in real time."
+      },
+      {
+        "level": 2,
+        "text": "Perfil do Cliente IdealIdeal Customer Profile"
+      },
+      {
+        "level": 3,
+        "text": "Perfil da EmpresaCompany Profile"
+      },
+      {
+        "level": 3,
+        "text": "Decisores-ChaveDecision Makers"
+      },
+      {
+        "level": 2,
+        "text": "Mapa de DoresPain Map"
+      },
+      {
+        "level": 4,
+        "text": "Intensidade das dores (escala 0–10)Pain intensity (0–10 scale)"
+      },
+      {
+        "level": 2,
+        "text": "AI Rudder vs. Incumbentes BRAI Rudder vs. Brazil Incumbents"
+      },
+      {
+        "level": 3,
+        "text": "Radar de CapacidadesCapability Radar"
+      },
+      {
+        "level": 3,
+        "text": "Resumo CompetitivoCompetitive Summary"
+      },
+      {
+        "level": 4,
+        "text": "Locais: Zenvia, Blip, TakeLocal: Zenvia, Blip, Take"
+      },
+      {
+        "level": 4,
+        "text": "Globais: Genesys, Five9, NICEGlobal: Genesys, Five9, NICE"
+      },
+      {
+        "level": 4,
+        "text": "Vantagem AI RudderAI Rudder Advantage"
+      },
+      {
+        "level": 2,
+        "text": "Playbook de EntradaRecommended Entry Playbook"
+      },
+      {
+        "level": 4,
+        "text": "Beachhead — FintechsBeachhead — Fintechs"
+      },
+      {
+        "level": 4,
+        "text": "Expansão — Bancos & BPOsExpansion — Banks & BPOs"
+      },
+      {
+        "level": 4,
+        "text": "Escala — Full MarketScale — Full Market"
+      },
+      {
+        "level": 4,
+        "text": "Fatores Críticos de SucessoCritical Success Factors"
+      },
+      {
+        "level": 2,
+        "text": "TAM & Potencial de CapturaAddressable Market & Capture Forecast"
+      },
+      {
+        "level": 4,
+        "text": "TAM por Tier (US$M)TAM by Tier ($M)"
+      },
+      {
+        "level": 4,
+        "text": "Trajetória de Captura de ReceitaRevenue Capture Trajectory"
+      },
+      {
+        "level": 4,
+        "text": "Calculadora What-ifWhat-if Calculator"
+      },
+      {
+        "level": 2,
+        "text": "Notas · Sales TeamNotes · Sales Team"
+      },
+      {
+        "level": 3,
+        "text": "Notas salvasSaved notes"
+      },
+      {
+        "level": 3,
+        "text": "Assistente IA · AI RudderAI Assistant · AI Rudder"
+      }
+    ],
+    "imgsNoAlt": 0,
+    "inputsNoLabel": 19,
+    "buttonsNoName": 2,
+    "contrastWarnings": []
+  },
+  "sections": [
+    {
+      "tag": "section",
+      "id": "contexto",
+      "cls": "hero",
+      "height": 532,
+      "width": 1200
+    },
+    {
+      "tag": "section",
+      "id": "overview",
+      "cls": "section reveal in",
+      "height": 492,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "portfolio",
+      "cls": "section reveal",
+      "height": 867,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "ranking",
+      "cls": "section reveal",
+      "height": 7760,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "contatos",
+      "cls": "section reveal",
+      "height": 586,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "briefings",
+      "cls": "section reveal",
+      "height": 6029,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "copilot",
+      "cls": "section reveal",
+      "height": 1823,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "cadencia",
+      "cls": "section reveal",
+      "height": 669,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "proximos",
+      "cls": "section reveal",
+      "height": 463,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "surfe",
+      "cls": "section reveal",
+      "height": 1352,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "icp-profile",
+      "cls": "section reveal",
+      "height": 982,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "pains",
+      "cls": "section reveal",
+      "height": 1379,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "competitive",
+      "cls": "section reveal",
+      "height": 1286,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "gtm",
+      "cls": "section reveal",
+      "height": 1071,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "revenue",
+      "cls": "section reveal",
+      "height": 1131,
+      "width": 1091
+    },
+    {
+      "tag": "section",
+      "id": "notes",
+      "cls": "section reveal",
+      "height": 899,
+      "width": 1091
+    }
+  ],
+  "charts": {
+    "canvas": 0,
+    "svgCharts": 0,
+    "tables": 0,
+    "rowCounts": []
+  },
+  "meta": {
+    "domNodes": 7732,
+    "visibleText": 23656,
+    "hasDarkMode": true,
+    "title": "AI Rudder — Sales Intelligence Panel",
+    "bodyClasses": ""
+  }
+}

@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AI Rudder · Design System v1 · Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  /* Brand */
+  --brand-50:#EAFBFA;--brand-100:#C7F4F1;--brand-200:#8CE6E2;--brand-300:#44C9C1;
+  --brand-400:#1CA7A0;--brand-500:#0E8A85;--brand-600:#0A6F6B;--brand-700:#08524F;
+  --brand-800:#043736;--brand-900:#022523;
+  /* Navy */
+  --navy-50:#F3F7FC;--navy-100:#DCE6F2;--navy-200:#B3C5DE;--navy-300:#7A98C1;
+  --navy-400:#4A6D9D;--navy-500:#024F94;--navy-600:#023D75;--navy-700:#022C57;
+  --navy-800:#011D3C;--navy-900:#010F22;
+  /* Gray */
+  --gray-50:#F8FAFC;--gray-100:#E6EDF6;--gray-200:#C6D2E0;--gray-300:#9AA8BA;
+  --gray-400:#6C7A90;--gray-500:#4A596E;--gray-600:#35445A;--gray-700:#232F44;
+  --gray-800:#15203A;--gray-900:#0B1327;
+  /* Semantic */
+  --success-500:#22C55E;--success-600:#16A34A;
+  --warning-500:#F59E0B;--warning-600:#D97706;
+  --danger-500:#EF4444;--danger-600:#DC2626;
+  --info-500:#3B82F6;--info-600:#2563EB;
+  /* Chart ordinal */
+  --c1:#44C9C1;--c2:#3B82F6;--c3:#A855F7;--c4:#F59E0B;
+  --c5:#EF4444;--c6:#22C55E;--c7:#EC4899;--c8:#14B8A6;
+  /* Radii / shadows / motion */
+  --r-xs:4px;--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;--r-full:9999px;
+  --sh-xs:0 1px 2px rgba(2,15,34,.08);
+  --sh-sm:0 2px 4px rgba(2,15,34,.10),0 1px 2px rgba(2,15,34,.06);
+  --sh-md:0 6px 16px rgba(2,15,34,.14),0 2px 4px rgba(2,15,34,.06);
+  --sh-lg:0 16px 32px rgba(2,15,34,.18),0 4px 8px rgba(2,15,34,.08);
+  --sh-xl:0 24px 48px rgba(2,15,34,.24),0 8px 16px rgba(2,15,34,.12);
+  --sh-glow:0 0 0 1px var(--brand-400),0 0 20px rgba(68,201,193,.35);
+  --motion-fast:120ms cubic-bezier(.4,0,.2,1);
+  --motion-base:180ms cubic-bezier(.4,0,.2,1);
+  --motion-slow:300ms cubic-bezier(.25,.8,.25,1);
+}
+/* Dark theme tokens */
+html[data-theme="dark"] {
+  --bg:var(--navy-900);
+  --bg-elev:var(--gray-700);
+  --bg-elev-2:var(--gray-800);
+  --border:var(--gray-600);
+  --border-subtle:var(--gray-700);
+  --text:var(--gray-100);
+  --text-muted:var(--gray-300);
+  --text-faint:var(--gray-400);
+  --accent:var(--brand-300);
+  --accent-hover:var(--brand-200);
+  --ring:var(--brand-300);
+}
+/* Light theme tokens */
+html[data-theme="light"] {
+  --bg:var(--gray-50);
+  --bg-elev:#FFFFFF;
+  --bg-elev-2:var(--navy-50);
+  --border:var(--gray-200);
+  --border-subtle:var(--gray-100);
+  --text:var(--gray-900);
+  --text-muted:var(--gray-500);
+  --text-faint:var(--gray-400);
+  --accent:var(--brand-500);
+  --accent-hover:var(--brand-600);
+  --ring:var(--brand-500);
+}
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; }
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:background var(--motion-base),color var(--motion-base);
+}
+html[lang="zh-CN"] body { font-family:'Noto Sans SC','Inter',sans-serif; }
+h1,h2,h3,h4,h5 { font-family:'Sora','Inter',sans-serif; letter-spacing:-.02em; margin:0; }
+h1 { font-size:48px; font-weight:700; line-height:1.1; }
+h2 { font-size:30px; font-weight:700; line-height:1.2; }
+h3 { font-size:20px; font-weight:600; line-height:1.3; }
+h4 { font-size:16px; font-weight:600; line-height:1.4; }
+.mono { font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; }
+.container { max-width:1280px; margin:0 auto; padding:48px 24px; }
+.section { margin-bottom:96px; }
+.section-header { display:flex; justify-content:space-between; align-items:end; margin-bottom:32px; gap:16px; flex-wrap:wrap; }
+.section-subtitle { color:var(--text-muted); margin-top:4px; font-size:14px; }
+.grid { display:grid; gap:16px; }
+.g-2 { grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); }
+.g-3 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+.g-4 { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+.card { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--r-md); padding:20px; transition:border-color var(--motion-base); }
+.card:hover { border-color:var(--accent); }
+.card-elev { box-shadow:var(--sh-md); }
+
+/* TOP BAR */
+.topbar {
+  position:sticky; top:0; z-index:10;
+  background:color-mix(in srgb,var(--bg) 80%,transparent);
+  backdrop-filter:blur(12px) saturate(150%);
+  border-bottom:1px solid var(--border-subtle);
+}
+.topbar-inner { max-width:1280px; margin:0 auto; padding:16px 24px; display:flex; gap:24px; align-items:center; }
+.logo { font-family:'Sora',sans-serif; font-weight:700; font-size:20px; color:var(--accent); letter-spacing:-.02em; }
+.logo::after { content:""; display:inline-block; width:8px; height:8px; background:var(--brand-300); border-radius:50%; margin-left:6px; vertical-align:middle; }
+.topbar-spacer { flex:1; }
+.chip-group { display:inline-flex; background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--r-full); padding:3px; }
+.chip {
+  padding:6px 14px; border:none; background:transparent; color:var(--text-muted);
+  border-radius:var(--r-full); font-size:13px; font-weight:500; cursor:pointer;
+  font-family:inherit; transition:all var(--motion-fast);
+}
+.chip:hover { color:var(--text); }
+.chip[aria-pressed="true"] { background:var(--accent); color:var(--navy-900); }
+html[data-theme="light"] .chip[aria-pressed="true"] { color:#fff; }
+.theme-btn {
+  width:36px; height:36px; border:1px solid var(--border); background:var(--bg-elev);
+  border-radius:var(--r-sm); cursor:pointer; color:var(--text);
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:all var(--motion-fast);
+}
+.theme-btn:hover { border-color:var(--accent); color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">AI Rudder</div>
+    <span style="color:var(--text-faint); font-size:13px;">Design System v1 · Preview</span>
+    <div class="topbar-spacer"></div>
+    <div class="chip-group" role="radiogroup" aria-label="Language">
+      <button class="chip" role="radio" aria-pressed="true" data-lang="pt-BR">PT</button>
+      <button class="chip" role="radio" aria-pressed="false" data-lang="en-US">EN</button>
+      <button class="chip" role="radio" aria-pressed="false" data-lang="zh-CN">中文</button>
+    </div>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</div>
+<div class="container" id="main">
+  <!-- SECTIONS INJECTED BELOW -->
+  <section class="section" style="margin-top:32px;">
+    <div class="section-header">
+      <div>
+        <h2>Palette</h2>
+        <p class="section-subtitle">Brand · Navy · Neutral · Semantic · Chart ordinal — all verified ≥ 4.5:1 contrast on semantic text.</p>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(10,1fr); gap:4px; margin-bottom:16px;" id="ramp-brand"></div>
+    <div style="color:var(--text-muted); font-size:12px; margin-bottom:24px;" class="mono">brand · teal signature</div>
+    <div style="display:grid; grid-template-columns:repeat(10,1fr); gap:4px; margin-bottom:16px;" id="ramp-navy"></div>
+    <div style="color:var(--text-muted); font-size:12px; margin-bottom:24px;" class="mono">navy · surface</div>
+    <div style="display:grid; grid-template-columns:repeat(10,1fr); gap:4px; margin-bottom:16px;" id="ramp-gray"></div>
+    <div style="color:var(--text-muted); font-size:12px; margin-bottom:24px;" class="mono">gray · neutral (cool)</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px;" id="semantic"></div>
+    <div style="display:grid; grid-template-columns:repeat(8,1fr); gap:8px;" id="chart-ordinal"></div>
+    <div style="color:var(--text-muted); font-size:12px; margin-top:8px;" class="mono">chart · ordinal (colorblind-aware)</div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2>Redesigned sign-in</h2><p class="section-subtitle">Fixes: proper &lt;form&gt;, labels, two-pane layout, value-prop right side — kills the empty-room feel.</p></div></div>
+    <div class="card card-elev" style="padding:0; overflow:hidden; display:grid; grid-template-columns:1fr 1.1fr; min-height:560px;">
+      <div style="padding:48px; display:flex; flex-direction:column; justify-content:center;">
+        <div class="logo" style="font-size:28px; margin-bottom:40px;">AI Rudder</div>
+        <h2 style="margin-bottom:8px;" data-i18n="welcome">Bem-vindo de volta</h2>
+        <p style="color:var(--text-muted); margin-bottom:32px;">Painel privado · identifique-se para continuar</p>
+        <form style="display:flex; flex-direction:column; gap:16px;" onsubmit="event.preventDefault();alert('Preview only');">
+          <label style="display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:13px; font-weight:500; color:var(--text-muted);" data-i18n="username">Usuário</span>
+            <input type="text" required autocomplete="username" style="padding:12px 14px; border:1px solid var(--border); border-radius:var(--r-sm); background:var(--bg); color:var(--text); font-size:15px; font-family:inherit;" placeholder="you@company.com" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:13px; font-weight:500; color:var(--text-muted);" data-i18n="password">Senha</span>
+            <input type="password" required autocomplete="current-password" style="padding:12px 14px; border:1px solid var(--border); border-radius:var(--r-sm); background:var(--bg); color:var(--text); font-size:15px; font-family:inherit;" />
+          </label>
+          <button type="submit" style="margin-top:8px; padding:14px; border:none; border-radius:var(--r-sm); background:linear-gradient(135deg,var(--brand-500),var(--brand-300)); color:#fff; font-weight:600; font-size:15px; cursor:pointer; font-family:inherit; box-shadow:var(--sh-glow); transition:transform var(--motion-fast);" data-i18n="signIn">Entrar</button>
+          <button type="button" style="background:transparent; border:none; color:var(--accent); font-size:13px; cursor:pointer; font-family:inherit; margin-top:4px;" data-i18n="forgot">Esqueci minha senha</button>
+        </form>
+      </div>
+      <div style="background:radial-gradient(circle at 30% 20%,rgba(68,201,193,.15),transparent 60%),radial-gradient(circle at 80% 80%,rgba(59,130,246,.12),transparent 60%),linear-gradient(135deg,var(--navy-800),var(--navy-900)); padding:48px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden;">
+        <div>
+          <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(68,201,193,.15); border:1px solid rgba(68,201,193,.3); padding:6px 12px; border-radius:var(--r-full); color:var(--brand-300); font-size:12px; font-weight:500;">
+            <span style="width:6px; height:6px; background:var(--brand-300); border-radius:50%;"></span>
+            Live · 79 hot leads today
+          </div>
+          <div style="margin-top:24px; color:#E6EDF6; font-family:'Sora',sans-serif; font-size:32px; line-height:1.2; font-weight:700;">"Nubank is warming up.<br/>3 stakeholders, 2 touchpoints left."</div>
+          <div style="color:var(--gray-300); margin-top:12px; font-size:14px;">— Your AI Co-Pilot briefed this morning</div>
+        </div>
+        <div class="card" style="background:rgba(11,19,39,.6); border-color:var(--gray-600);">
+          <div style="display:flex; gap:16px; align-items:center;">
+            <div style="flex:1;">
+              <div style="font-size:12px; color:var(--text-muted);">Weekly pipeline</div>
+              <div class="mono" style="font-size:24px; font-weight:700; color:#fff; margin-top:2px;">R$ 12.4M</div>
+              <div style="color:var(--success-500); font-size:12px; margin-top:2px;">↗ 18.2% vs last week</div>
+            </div>
+            <svg width="120" height="48" viewBox="0 0 120 48">
+              <defs><linearGradient id="spark-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44C9C1" stop-opacity=".4"/><stop offset="1" stop-color="#44C9C1" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0,40 L15,32 L30,36 L45,24 L60,20 L75,16 L90,22 L105,12 L120,8 L120,48 L0,48 Z" fill="url(#spark-grad)"/>
+              <path d="M0,40 L15,32 L30,36 L45,24 L60,20 L75,16 L90,22 L105,12 L120,8" fill="none" stroke="#44C9C1" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2 data-i18n="overview">Visão geral</h2><p class="section-subtitle">KPI grid with deltas + sparklines. Reserved-space skeletons fix the 0.392 CLS regression.</p></div></div>
+    <div class="grid g-4">
+      <div class="card">
+        <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em;" data-i18n="hot">Leads quentes</div>
+        <div style="display:flex; align-items:baseline; gap:12px; margin-top:8px;">
+          <div class="mono" style="font-size:32px; font-weight:700;">79</div>
+          <div style="color:var(--success-500); font-size:13px; font-weight:500;">↗ 12</div>
+        </div>
+        <svg width="100%" height="32" viewBox="0 0 180 32" preserveAspectRatio="none" style="margin-top:12px;"><path d="M0,24 L20,20 L40,22 L60,14 L80,18 L100,10 L120,12 L140,6 L160,8 L180,4" fill="none" stroke="var(--c1)" stroke-width="1.5"/></svg>
+      </div>
+      <div class="card">
+        <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em;" data-i18n="meetings">Reuniões semanais</div>
+        <div style="display:flex; align-items:baseline; gap:12px; margin-top:8px;">
+          <div class="mono" style="font-size:32px; font-weight:700;">17</div>
+          <div style="color:var(--success-500); font-size:13px; font-weight:500;">↗ 4</div>
+        </div>
+        <svg width="100%" height="32" viewBox="0 0 180 32" preserveAspectRatio="none" style="margin-top:12px;"><path d="M0,20 L20,22 L40,16 L60,18 L80,14 L100,12 L120,16 L140,8 L160,10 L180,6" fill="none" stroke="var(--c2)" stroke-width="1.5"/></svg>
+      </div>
+      <div class="card">
+        <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em;" data-i18n="proposals">Propostas abertas</div>
+        <div style="display:flex; align-items:baseline; gap:12px; margin-top:8px;">
+          <div class="mono" style="font-size:32px; font-weight:700;">9</div>
+          <div style="color:var(--warning-500); font-size:13px; font-weight:500;">→ 0</div>
+        </div>
+        <svg width="100%" height="32" viewBox="0 0 180 32" preserveAspectRatio="none" style="margin-top:12px;"><path d="M0,16 L20,14 L40,18 L60,16 L80,12 L100,14 L120,10 L140,12 L160,14 L180,12" fill="none" stroke="var(--c4)" stroke-width="1.5"/></svg>
+      </div>
+      <div class="card">
+        <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em;" data-i18n="risk">Contas em risco</div>
+        <div style="display:flex; align-items:baseline; gap:12px; margin-top:8px;">
+          <div class="mono" style="font-size:32px; font-weight:700;">3</div>
+          <div style="color:var(--danger-500); font-size:13px; font-weight:500;">↘ 2</div>
+        </div>
+        <svg width="100%" height="32" viewBox="0 0 180 32" preserveAspectRatio="none" style="margin-top:12px;"><path d="M0,8 L20,12 L40,10 L60,14 L80,18 L100,16 L120,20 L140,22 L160,20 L180,24" fill="none" stroke="var(--c5)" stroke-width="1.5"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2 data-i18n="portfolio">Portfolio Breakdown</h2><p class="section-subtitle">Donuts via Recharts + sortable bars. Every chart has a "View as table" a11y toggle in production.</p></div></div>
+    <div class="grid g-3">
+      <div class="card">
+        <div style="font-size:13px; font-weight:500; color:var(--text-muted); margin-bottom:12px;" data-i18n="byTier">Por Tier ICP</div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="ICP Tier donut chart">
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--gray-700)" stroke-width="14"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c1)" stroke-width="14" stroke-dasharray="204 345" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c2)" stroke-width="14" stroke-dasharray="100 345" stroke-dashoffset="-204" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c3)" stroke-width="14" stroke-dasharray="41 345" stroke-dashoffset="-304" transform="rotate(-90 70 70)"/>
+            <text x="70" y="68" text-anchor="middle" font-family="Sora" font-size="28" font-weight="700" fill="var(--text)">59</text>
+            <text x="70" y="86" text-anchor="middle" font-family="Inter" font-size="10" fill="var(--text-muted)">accounts</text>
+          </svg>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; flex:1;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c1); border-radius:2px;"></span>Tier 1 · 34</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c2); border-radius:2px;"></span>Tier 2 · 18</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c3); border-radius:2px;"></span>Tier 3 · 7</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px; font-weight:500; color:var(--text-muted); margin-bottom:12px;" data-i18n="bySector">Por Setor</div>
+        <div style="display:flex; align-items:center; gap:20px;">
+          <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Sector donut chart">
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--gray-700)" stroke-width="14"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c4)" stroke-width="14" stroke-dasharray="130 345" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c1)" stroke-width="14" stroke-dasharray="90 345" stroke-dashoffset="-130" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c6)" stroke-width="14" stroke-dasharray="70 345" stroke-dashoffset="-220" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="55" fill="none" stroke="var(--c7)" stroke-width="14" stroke-dasharray="55 345" stroke-dashoffset="-290" transform="rotate(-90 70 70)"/>
+            <text x="70" y="68" text-anchor="middle" font-family="Sora" font-size="28" font-weight="700" fill="var(--text)">59</text>
+            <text x="70" y="86" text-anchor="middle" font-family="Inter" font-size="10" fill="var(--text-muted)">accounts</text>
+          </svg>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; flex:1;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c4); border-radius:2px;"></span>Banks · 22</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c1); border-radius:2px;"></span>Telco · 15</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c6); border-radius:2px;"></span>Retail · 12</div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; background:var(--c7); border-radius:2px;"></span>Other · 10</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px; font-weight:500; color:var(--text-muted); margin-bottom:12px;" data-i18n="dealSize">Faixa de Ticket</div>
+        <svg width="100%" height="160" viewBox="0 0 240 160" role="img" aria-label="Deal size range bar chart">
+          <defs><linearGradient id="bar-grad" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--brand-600)"/><stop offset="1" stop-color="var(--brand-300)"/></linearGradient></defs>
+          <g font-family="JetBrains Mono" font-size="8" fill="var(--text-muted)">
+            <text x="4" y="16">$500K+</text><rect x="56" y="12" width="180" height="14" fill="url(#bar-grad)" rx="2"/><text x="242" y="22" text-anchor="end" fill="var(--text)">18</text>
+            <text x="4" y="44">$250K</text><rect x="56" y="40" width="140" height="14" fill="url(#bar-grad)" rx="2"/><text x="200" y="50" text-anchor="end" fill="var(--text)">14</text>
+            <text x="4" y="72">$100K</text><rect x="56" y="68" width="100" height="14" fill="url(#bar-grad)" rx="2"/><text x="160" y="78" text-anchor="end" fill="var(--text)">10</text>
+            <text x="4" y="100">$50K</text><rect x="56" y="96" width="70" height="14" fill="url(#bar-grad)" rx="2"/><text x="130" y="106" text-anchor="end" fill="var(--text)">7</text>
+            <text x="4" y="128">$25K</text><rect x="56" y="124" width="40" height="14" fill="url(#bar-grad)" rx="2"/><text x="100" y="134" text-anchor="end" fill="var(--text)">4</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2>Components</h2><p class="section-subtitle">shadcn/ui on Tailwind v4 + Radix — buttons, inputs, badges, alerts.</p></div></div>
+    <div class="card" style="padding:32px;">
+      <h4 style="margin-bottom:16px;">Buttons</h4>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:32px;">
+        <button style="padding:10px 18px; border:none; border-radius:var(--r-sm); background:linear-gradient(135deg,var(--brand-500),var(--brand-300)); color:#fff; font-weight:600; cursor:pointer; font-family:inherit; font-size:14px;" data-i18n="signIn">Entrar</button>
+        <button style="padding:10px 18px; border:1px solid var(--border); border-radius:var(--r-sm); background:transparent; color:var(--text); font-weight:500; cursor:pointer; font-family:inherit; font-size:14px;">Secondary</button>
+        <button style="padding:10px 18px; border:none; border-radius:var(--r-sm); background:transparent; color:var(--accent); font-weight:500; cursor:pointer; font-family:inherit; font-size:14px;">Ghost</button>
+        <button style="padding:10px 18px; border:none; border-radius:var(--r-sm); background:var(--danger-500); color:#fff; font-weight:600; cursor:pointer; font-family:inherit; font-size:14px;">Destructive</button>
+        <button style="padding:10px; border:1px solid var(--border); border-radius:var(--r-sm); background:var(--bg-elev); color:var(--text); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px;" aria-label="More options">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        </button>
+      </div>
+
+      <h4 style="margin-bottom:16px;">Badges · Alerts · Chips</h4>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
+        <span style="padding:3px 10px; background:rgba(34,197,94,.15); color:var(--success-500); border-radius:var(--r-full); font-size:12px; font-weight:500;">● Champion</span>
+        <span style="padding:3px 10px; background:rgba(245,158,11,.15); color:var(--warning-500); border-radius:var(--r-full); font-size:12px; font-weight:500;">● Neutral</span>
+        <span style="padding:3px 10px; background:rgba(239,68,68,.15); color:var(--danger-500); border-radius:var(--r-full); font-size:12px; font-weight:500;">● Blocker</span>
+        <span style="padding:3px 10px; background:rgba(59,130,246,.15); color:var(--info-500); border-radius:var(--r-full); font-size:12px; font-weight:500;">AI Score 87</span>
+        <span style="padding:3px 10px; background:var(--bg-elev-2); color:var(--text-muted); border-radius:var(--r-full); font-size:12px; font-weight:500;">Tier 1</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
+        <div style="padding:12px 16px; border-left:3px solid var(--success-500); background:rgba(34,197,94,.08); border-radius:var(--r-sm); font-size:13px;"><strong>Nubank</strong> moved to Champion status.</div>
+        <div style="padding:12px 16px; border-left:3px solid var(--warning-500); background:rgba(245,158,11,.08); border-radius:var(--r-sm); font-size:13px;"><strong>Magalu</strong> has not been contacted in 14 days.</div>
+        <div style="padding:12px 16px; border-left:3px solid var(--danger-500); background:rgba(239,68,68,.08); border-radius:var(--r-sm); font-size:13px;"><strong>Casas Bahia</strong> deal at risk — decision maker left.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2 data-i18n="ranking">Ranking ICP</h2><p class="section-subtitle" data-i18n="rankingSub">As 10 contas que movem o trimestre.</p></div></div>
+    <div class="card" style="padding:0; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="background:var(--bg-elev-2); text-align:left;">
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;">#</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;">Account</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;">Tier</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;">Sector</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;" class="mono">Deal</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;">30-day trend</th>
+            <th style="padding:12px 16px; font-weight:500; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em;" class="mono">AI</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><div><h2>What Phase 3 delivers</h2><p class="section-subtitle">On your approval of this system, Phase 3 rebuilds the app on Vite + React 18 + TS + Tailwind v4 + shadcn/ui.</p></div></div>
+    <div class="grid g-3">
+      <div class="card"><h4 style="margin-bottom:8px;">🔒 Security baseline</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Rotate keys · server-side proxy · proper auth (Argon2id + httpOnly cookie) · rate limits · audit log.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">🗺️ Route split</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">28 961 px tower → /overview · /accounts · /briefings · /co-pilot · /cadence · /market · /settings.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">📐 Skeleton screens</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Reserved-space primitives drop CLS from 0.392 → &lt; 0.05.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">📊 Chart kit</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Recharts + Nivo, a11y-first, "View as table" fallback on every chart.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">🌏 Trilingual i18n</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">i18next + JSON dictionaries. PT-BR, EN-US, zh-CN. 19 untranslated strings fixed.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">⌘ K palette</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Global keyboard-first search across accounts, briefings, and actions.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">🧭 Decision-maker map</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Force-directed graph of stakeholders per account with champion/blocker coloring.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">🔥 Cadence heatmap</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">GitHub-style activity calendar to spot cold accounts in one glance.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px;">🤖 Co-Pilot upgrade</h4><p style="color:var(--text-muted); font-size:13px; margin:0;">Streaming · citations · voice I/O in all three languages.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card" style="padding:32px; background:linear-gradient(135deg,rgba(68,201,193,.08),rgba(59,130,246,.05));">
+      <h3 style="margin-bottom:8px;">Say <span class="mono" style="color:var(--accent);">"go Phase 3"</span> to start implementation.</h3>
+      <p style="color:var(--text-muted); margin:0; font-size:14px;">Phase 3 lands on branch <span class="mono" style="color:var(--accent);">claude/webapp-analyzer-ui-enhancement-7Qyaz</span>. Phase 4 closes the loop with Playwright visual regression + axe a11y + re-measured Web Vitals.</p>
+    </div>
+  </section>
+
+
+
+  <section class="section">
+    <div class="section-header"><div><h2>Typography</h2><p class="section-subtitle">Sora (display) · Inter (body) · JetBrains Mono (data) · Noto Sans SC (zh-CN).</p></div></div>
+    <div class="card" style="padding:32px;">
+      <h1 style="margin-bottom:8px;" data-i18n="hero">Inteligência para cada conversa comercial.</h1>
+      <p style="color:var(--text-muted); font-size:18px; max-width:640px;" data-i18n="sub">Um painel vivo com as contas que importam — respostas, contextualizações e prontos para o próximo movimento.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px; margin-top:32px; padding-top:24px; border-top:1px solid var(--border-subtle);">
+        <div><div style="font-family:'Sora',sans-serif; font-size:60px; font-weight:800; line-height:1; color:var(--accent);">Aa</div><div style="color:var(--text-muted); font-size:12px; margin-top:8px;" class="mono">Sora · Display</div></div>
+        <div><div style="font-family:'Inter',sans-serif; font-size:60px; font-weight:500; line-height:1;">Aa</div><div style="color:var(--text-muted); font-size:12px; margin-top:8px;" class="mono">Inter · Body</div></div>
+        <div><div style="font-family:'JetBrains Mono',monospace; font-size:60px; font-weight:500; line-height:1;">0.1</div><div style="color:var(--text-muted); font-size:12px; margin-top:8px;" class="mono">JetBrains · Data</div></div>
+        <div><div style="font-family:'Noto Sans SC',sans-serif; font-size:60px; font-weight:700; line-height:1;">中</div><div style="color:var(--text-muted); font-size:12px; margin-top:8px;" class="mono">Noto Sans SC · zh-CN</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+const I18N = {
+  'pt-BR': { hero:'Inteligência para cada conversa comercial.', sub:'Um painel vivo com as contas que importam — respostas, contextualizações e prontos para o próximo movimento.', signIn:'Entrar', welcome:'Bem-vindo de volta', username:'Usuário', password:'Senha', forgot:'Esqueci minha senha', overview:'Visão geral', hot:'Leads quentes', meetings:'Reuniões semanais', proposals:'Propostas abertas', risk:'Contas em risco', portfolio:'Portfolio Breakdown', byTier:'Por Tier ICP', bySector:'Por Setor', dealSize:'Faixa de Ticket', ranking:'Ranking ICP', rankingSub:'As 10 contas que movem o trimestre.' },
+  'en-US': { hero:'Intelligence for every sales conversation.', sub:'A live panel of the accounts that matter — answers, context, and the next move always ready.', signIn:'Sign in', welcome:'Welcome back', username:'Username', password:'Password', forgot:'Forgot password?', overview:'Overview', hot:'Hot leads', meetings:'Weekly meetings', proposals:'Open proposals', risk:'At-risk accounts', portfolio:'Portfolio Breakdown', byTier:'By ICP Tier', bySector:'By Sector', dealSize:'Deal Size Range', ranking:'ICP Ranking', rankingSub:'The 10 accounts that move the quarter.' },
+  'zh-CN': { hero:'为每一次销售对话提供情报。', sub:'实时呈现关键客户——答案、背景和下一步行动随时就绪。', signIn:'登录', welcome:'欢迎回来', username:'用户名', password:'密码', forgot:'忘记密码？', overview:'概览', hot:'热门线索', meetings:'本周会议', proposals:'进行中的提案', risk:'高风险客户', portfolio:'组合分析', byTier:'按 ICP 层级', bySector:'按行业', dealSize:'交易规模分布', ranking:'ICP 排名', rankingSub:'驱动本季度的 10 个重点客户。' }
+};
+let currentLang = 'pt-BR';
+function applyI18n(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[lang][k]) el.textContent = I18N[lang][k];
+  });
+  document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+}
+document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => applyI18n(b.dataset.lang)));
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+});
+
+// Populate color ramps
+function ramp(id, name) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  [50,100,200,300,400,500,600,700,800,900].forEach(s => {
+    const c = getComputedStyle(document.documentElement).getPropertyValue('--'+name+'-'+s).trim();
+    const d = document.createElement('div');
+    d.style.cssText = 'aspect-ratio:1.4; background:'+c+'; border-radius:4px; position:relative; overflow:hidden;';
+    d.innerHTML = '<span style="position:absolute; bottom:4px; left:6px; font-family:JetBrains Mono,monospace; font-size:9px; color:'+(s<=400?'#0B1327':'#F8FAFC')+'; font-weight:500;">'+s+'</span>';
+    el.appendChild(d);
+  });
+}
+ramp('ramp-brand','brand'); ramp('ramp-navy','navy'); ramp('ramp-gray','gray');
+
+// Semantic swatches
+const sem = document.getElementById('semantic');
+if (sem) [['success','#22C55E'],['warning','#F59E0B'],['danger','#EF4444'],['info','#3B82F6']].forEach(([n,c])=>{
+  const d=document.createElement('div');
+  d.style.cssText='background:'+c+'; color:#fff; padding:16px; border-radius:8px; font-weight:600;';
+  d.innerHTML=n+'<div style="font-family:JetBrains Mono,monospace; font-size:11px; font-weight:400; opacity:.8; margin-top:4px;">'+c+'</div>';
+  sem.appendChild(d);
+});
+
+// Chart ordinal
+const co = document.getElementById('chart-ordinal');
+if (co) ['#44C9C1','#3B82F6','#A855F7','#F59E0B','#EF4444','#22C55E','#EC4899','#14B8A6'].forEach((c,i)=>{
+  const d=document.createElement('div');
+  d.style.cssText='aspect-ratio:1; background:'+c+'; border-radius:8px; display:flex; align-items:end; padding:8px;';
+  d.innerHTML='<span style="font-family:JetBrains Mono,monospace; font-size:10px; color:#0B1327; font-weight:600;">c'+(i+1)+'</span>';
+  co.appendChild(d);
+});
+
+// Ranking rows
+const rows = document.getElementById('ranking-rows');
+if (rows) {
+  const data = [
+    {r:1,n:'Nubank',t:1,s:'Fintech',d:'R$ 2.4M',sc:92,delta:'up'},
+    {r:2,n:'Itaú Unibanco',t:1,s:'Bank',d:'R$ 1.8M',sc:88,delta:'up'},
+    {r:3,n:'Magazine Luiza',t:1,s:'Retail',d:'R$ 1.1M',sc:84,delta:'flat'},
+    {r:4,n:'Bradesco',t:1,s:'Bank',d:'R$ 980K',sc:81,delta:'up'},
+    {r:5,n:'BTG Pactual',t:2,s:'Finance',d:'R$ 760K',sc:76,delta:'down'},
+    {r:6,n:'XP Inc.',t:2,s:'Finance',d:'R$ 640K',sc:73,delta:'up'},
+    {r:7,n:'Claro',t:2,s:'Telco',d:'R$ 520K',sc:69,delta:'flat'},
+    {r:8,n:'Porto Seguro',t:2,s:'Insurance',d:'R$ 430K',sc:65,delta:'up'},
+    {r:9,n:'Santander BR',t:3,s:'Bank',d:'R$ 310K',sc:58,delta:'down'},
+    {r:10,n:'Casas Bahia',t:3,s:'Retail',d:'R$ 240K',sc:42,delta:'down'}
+  ];
+  const trendColors = { up:'var(--c1)', flat:'var(--c4)', down:'var(--c5)' };
+  const trendPaths = {
+    up: 'M0,24 L15,20 L30,16 L45,18 L60,12 L75,14 L90,8',
+    flat: 'M0,16 L15,14 L30,18 L45,14 L60,18 L75,16 L90,18',
+    down: 'M0,8 L15,12 L30,14 L45,16 L60,20 L75,22 L90,24'
+  };
+  const tierColors = ['var(--brand-300)','var(--c2)','var(--c4)'];
+  rows.innerHTML = data.map(a => `
+    <tr style="border-top:1px solid var(--border-subtle);">
+      <td style="padding:12px 16px; color:var(--text-muted);" class="mono">${String(a.r).padStart(2,'0')}</td>
+      <td style="padding:12px 16px; font-weight:500;">${a.n}</td>
+      <td style="padding:12px 16px;"><span style="padding:2px 8px; background:rgba(68,201,193,.12); color:${tierColors[a.t-1]}; border-radius:var(--r-full); font-size:11px; font-weight:600;">T${a.t}</span></td>
+      <td style="padding:12px 16px; color:var(--text-muted);">${a.s}</td>
+      <td style="padding:12px 16px; text-align:right;" class="mono">${a.d}</td>
+      <td style="padding:12px 16px;"><svg width="90" height="24" viewBox="0 0 90 24"><path d="${trendPaths[a.delta]}" fill="none" stroke="${trendColors[a.delta]}" stroke-width="1.5"/></svg></td>
+      <td style="padding:12px 16px; text-align:right;" class="mono"><span style="color:${a.sc>=80?'var(--success-500)':a.sc>=60?'var(--warning-500)':'var(--danger-500)'}; font-weight:600;">${a.sc}</span></td>
+    </tr>
+  `).join('');
+}
+</script>
+</body>
+</html>
