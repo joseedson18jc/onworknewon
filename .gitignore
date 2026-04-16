@@ -21,3 +21,5 @@ storybook-static/
 reports/raw/
 reports/**/*.webm
 reports/**/*.zip
+# DOM snapshots can contain secrets baked into client-side JS — never commit
+reports/**/dom.html
