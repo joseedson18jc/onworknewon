@@ -9,11 +9,30 @@ import { Sidebar, type RouteKey } from '@/components/layout/Sidebar';
 import { useSession } from '@/lib/useSession';
 import { logout, type AuthMode } from '@/lib/api';
 
+// Lazy routes + command palette — shaves ~90 KB gz off the critical path.
+const AccountsRoute   = React.lazy(() => import('@/routes/AccountsRoute').then((m) => ({ default: m.AccountsRoute })));
+const CoPilotRoute    = React.lazy(() => import('@/routes/CoPilotRoute').then((m) => ({ default: m.CoPilotRoute })));
+const CadenceRoute    = React.lazy(() => import('@/routes/CadenceRoute').then((m) => ({ default: m.CadenceRoute })));
+const MarketMapRoute  = React.lazy(() => import('@/routes/MarketMapRoute').then((m) => ({ default: m.MarketMapRoute })));
+const CommandPalette  = React.lazy(() => import('@/components/CommandPalette').then((m) => ({ default: m.CommandPalette })));
+
+const RouteFallback: React.FC = () => (
+  <div className="max-w-[1440px] mx-auto px-6 py-10 space-y-4">
+    <div className="skeleton-shimmer h-8 w-48 rounded-sm" />
+    <div className="skeleton-shimmer h-4 w-72 rounded-sm" />
+    <div className="grid grid-cols-4 gap-4 mt-6">
+      {[0,1,2,3].map((i) => <div key={i} className="skeleton-shimmer h-28 rounded-md" />)}
+    </div>
+  </div>
+);
+
 export const App: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, authMode, loading, setUser } = useSession();
   const [modeOverride, setModeOverride] = React.useState<AuthMode | null>(null);
   const [route, setRoute] = React.useState<RouteKey>('overview');
+  const [paletteOpen, setPaletteOpen] = React.useState(false);
+  const [focusAccountId, setFocusAccountId] = React.useState<string | null>(null);
 
   const effectiveMode = modeOverride ?? authMode;
 
@@ -34,19 +53,31 @@ export const App: React.FC = () => {
     setUser(null);
   };
 
+  const navigate = (k: RouteKey, accountId?: string) => {
+    setRoute(k);
+    if (accountId) setFocusAccountId(accountId);
+  };
+
+  const toggleTheme = () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch {}
+  };
+
   let content: React.ReactNode;
   if (route === 'overview') {
     content = <OverviewRoute userName={user.username} />;
   } else if (route === 'accounts') {
-    content = <PlaceholderRoute title={t('ranking.title')} description={t('ranking.subtitle')} roadmap={['Virtualized table with @tanstack/react-table', 'Multi-column filters + full-text search', 'Slide-in account detail drawer', 'Bulk Surfe enrichment via /api/enrichment/surfe']} />;
+    content = <AccountsRoute focusAccountId={focusAccountId} onFocusConsumed={() => setFocusAccountId(null)} />;
+  } else if (route === 'coPilot') {
+    content = <CoPilotRoute />;
+  } else if (route === 'cadence') {
+    content = <CadenceRoute />;
+  } else if (route === 'marketMap') {
+    content = <MarketMapRoute />;
   } else if (route === 'briefings') {
     content = <PlaceholderRoute title={t('briefings.title')} description={t('briefings.allAccounts')} roadmap={['Priority briefings with AI-generated talking points (/api/ai/completions)', 'Cited source footer on every AI claim', 'Voice read-aloud (/api/voice/tts) in PT / EN / zh-CN', 'One-click PDF export']} />;
-  } else if (route === 'coPilot') {
-    content = <PlaceholderRoute title={t('coPilot.title')} description={t('coPilot.subtitle')} roadmap={['Streaming responses via /api/ai/completions (SSE)', 'Voice I/O (/api/voice/tts + /api/voice/asr)', 'Per-conversation memory, resumable across sessions', 'Keyboard-first ⌘K palette']} />;
-  } else if (route === 'cadence') {
-    content = <PlaceholderRoute title={t('cadence.title')} description={t('cadence.heatmap')} roadmap={['GitHub-style calendar heatmap of activity', 'Drill-down into any cell', 'Drag-to-reorder cadence steps with Framer Motion', 'Reply-rate analytics per template']} />;
-  } else if (route === 'marketMap') {
-    content = <PlaceholderRoute title={t('decisionMakers.title')} description={t('decisionMakers.subtitle')} roadmap={['Force-directed graph (D3 / visx)', 'Champion / blocker / neutral color coding', 'Edges = reports-to relationships from Surfe', 'List-mode toggle for screen readers']} />;
   } else if (route === 'goToMarket') {
     content = <PlaceholderRoute title={t('nav.goToMarket')} description="Brazil map shaded by TAM per region." roadmap={['D3 + topojson interactive Brazil map', 'Toggle: by state, industry cluster, rep territory', 'Drill-in to account list per region', 'Competitive matrix overlay']} />;
   } else {
@@ -55,7 +86,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <TopBar onSignOut={handleSignOut} />
+      <TopBar onSignOut={handleSignOut} onOpenPalette={() => setPaletteOpen(true)} />
       {effectiveMode === 'demo' && (
         <div role="status" className="bg-warning-500/10 text-warning-500 text-center text-xs font-medium py-1.5 border-b border-warning-500/30">
           ⚠ Demo mode — configure <span className="mono">AUTH_SECRET</span>, <span className="mono">KV_REST_API_*</span>, and provider keys in Vercel for production auth.
@@ -72,11 +103,21 @@ export const App: React.FC = () => {
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.22, ease: [0.25, 0.8, 0.25, 1] }}
             >
-              {content}
+              <React.Suspense fallback={<RouteFallback />}>
+                {content}
+              </React.Suspense>
             </motion.div>
           </AnimatePresence>
         </main>
       </div>
+      <React.Suspense fallback={null}><CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        onNavigate={navigate}
+        onToggleTheme={toggleTheme}
+        onChangeLanguage={(c) => void i18n.changeLanguage(c)}
+        onSignOut={handleSignOut}
+      /></React.Suspense>
     </div>
   );
 };

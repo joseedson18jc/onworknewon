@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/Button';
 
 export interface TopBarProps {
   onSignOut?: () => void;
+  onOpenPalette?: () => void;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ onSignOut }) => {
+export const TopBar: React.FC<TopBarProps> = ({ onSignOut, onOpenPalette }) => {
   const { t } = useTranslation();
   return (
     <header className="glass sticky top-0 z-20 border-b border-border-subtle">
@@ -18,16 +19,16 @@ export const TopBar: React.FC<TopBarProps> = ({ onSignOut }) => {
           <span className="font-display text-xl font-bold tracking-tight text-accent">AI Rudder</span>
           <span className="inline-block w-2 h-2 rounded-full bg-brand-300 animate-pulse-dot" aria-hidden />
         </div>
-        <div className="relative mx-4 hidden md:flex flex-1 max-w-xl">
+        <button
+          type="button"
+          onClick={onOpenPalette}
+          aria-label="Open command palette"
+          className="relative mx-4 hidden md:flex flex-1 max-w-xl h-9 rounded-sm border border-border bg-bg-elev pl-9 pr-12 text-sm text-text-faint items-center text-left hover:border-accent/60 hover:text-text transition-colors focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
+        >
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
-          <input
-            type="search"
-            aria-label={t('common.search')}
-            placeholder={t('common.search') + '…'}
-            className="w-full h-9 rounded-sm border border-border bg-bg-elev pl-9 pr-12 text-sm placeholder:text-text-faint focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
-          />
+          <span>{t('common.search')}…</span>
           <kbd className="absolute right-2 top-1/2 -translate-y-1/2 mono text-[10px] text-text-faint border border-border-subtle rounded-xs px-1.5 py-0.5">⌘K</kbd>
-        </div>
+        </button>
         <div className="ml-auto flex items-center gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
