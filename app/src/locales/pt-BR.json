@@ -1,0 +1,146 @@
+{
+  "brand": {
+    "name": "AI Rudder",
+    "tagline": "Assistente pessoal de vendas para o time comercial do Brasil (2026-2027) — pendente de aprovação da alta gestão."
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signedInSubtitle": "Painel privado · identifique-se para continuar",
+    "welcomeBack": "Bem-vindo de volta",
+    "username": "Usuário",
+    "password": "Senha",
+    "forgotPassword": "Esqueci minha senha",
+    "recoveryEmail": "E-mail de recuperação",
+    "send": "Enviar",
+    "invalidCredentials": "Credenciais inválidas. Verifique usuário e senha.",
+    "recoverySent": "Se o e-mail existir, um link de recuperação foi enviado.",
+    "recoveryInvalidEmail": "Informe um e-mail válido.",
+    "signOut": "Sair",
+    "sessionExpired": "Sessão expirada. Por favor entre novamente."
+  },
+  "nav": {
+    "panel": "Painel",
+    "context": "Contexto",
+    "accounts": "Contas",
+    "icpRanking": "Ranking ICP",
+    "briefings": "Briefings",
+    "coPilot": "AI Co-Pilot",
+    "cadence": "Cadência",
+    "nextSteps": "Próximos passos",
+    "surfe": "Surfe · Prospector",
+    "portfolio": "Portfólio ICP",
+    "decisionMap": "Mapa de decisão",
+    "competitive": "Competitivo",
+    "goToMarket": "Go-to-Market",
+    "notes": "Notas",
+    "meta": "Meta",
+    "settings": "Configurações"
+  },
+  "overview": {
+    "title": "Visão geral",
+    "hero": "Inteligência para cada conversa comercial.",
+    "subtitle": "Um painel vivo com as contas que importam — respostas, contextualizações e prontos para o próximo movimento.",
+    "dealsUpdated": "Deals atualizados",
+    "pipelineValue": "Valor do pipeline",
+    "slaAvg": "SLA médio",
+    "slaHelper": "Apurado à cada 150 contatos (24h)",
+    "hotLeads": "Leads quentes",
+    "weeklyMeetings": "Reuniões semanais",
+    "openProposals": "Propostas abertas",
+    "atRiskAccounts": "Contas em risco",
+    "briefingOfTheDay": "Briefing do dia",
+    "wakeUp": "Acordar",
+    "goToStandUp": "Ir de stand-up"
+  },
+  "portfolio": {
+    "title": "Portfolio Breakdown",
+    "byIcpTier": "Por Tier ICP",
+    "bySector": "Por Setor",
+    "dealSizeRange": "Faixa de Ticket (US$K/ano · top 10)",
+    "aiAnalysis": "Análise IA"
+  },
+  "ranking": {
+    "title": "Ranking ICP",
+    "subtitle": "As 10 contas que movem o trimestre.",
+    "column": {
+      "rank": "Posição",
+      "account": "Conta",
+      "tier": "Tier",
+      "sector": "Setor",
+      "dealSize": "Ticket",
+      "lastActivity": "Última atividade",
+      "aiScore": "Score IA",
+      "nextAction": "Próxima ação"
+    }
+  },
+  "decisionMakers": {
+    "title": "Decisores-chave",
+    "subtitle": "Quem manda em cada conta.",
+    "role": {
+      "champion": "Defensor",
+      "neutral": "Neutro",
+      "blocker": "Bloqueador",
+      "unknown": "Desconhecido"
+    }
+  },
+  "briefings": {
+    "title": "Briefings prioritários",
+    "allAccounts": "Todas as contas no radar",
+    "generateBriefing": "Gerar briefing"
+  },
+  "surfe": {
+    "title": "Surfe · Prospector",
+    "bulkEnrichment": "Enriquecimento em massa via Surfe API",
+    "apiKey": "Chave da API",
+    "jobTitle": "Cargo",
+    "sweetSpotBR": "Ponto doce: R$ 2B+",
+    "sweetSpotIntl": "Ponto doce: 2M+"
+  },
+  "coPilot": {
+    "title": "AI Co-Pilot",
+    "subtitle": "Seu copiloto para cada conversa comercial.",
+    "placeholder": "Pergunte algo sobre qualquer conta, briefing ou cadência…",
+    "send": "Enviar",
+    "listen": "Ouvir",
+    "stopListening": "Parar",
+    "speak": "Ler em voz alta"
+  },
+  "cadence": {
+    "title": "Cadência inteligente",
+    "heatmap": "Mapa de calor de atividades"
+  },
+  "empty": {
+    "noBriefings": {
+      "title": "Nenhum briefing pendente",
+      "body": "Suas contas estão em dia. Aproveite para ligar para alguém.",
+      "cta": "Ver todas as contas"
+    },
+    "noAccounts": {
+      "title": "Nenhuma conta ainda",
+      "body": "Comece enriquecendo uma lista de contas com a Surfe ou faça upload de um CSV.",
+      "cta": "Importar contas"
+    }
+  },
+  "common": {
+    "loading": "Carregando…",
+    "error": "Algo deu errado.",
+    "retry": "Tentar novamente",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "today": "Hoje",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mês",
+    "lastUpdated": "Atualizado em {date}",
+    "viewAsTable": "Ver como tabela"
+  },
+  "language": {
+    "pt-BR": "Português",
+    "en-US": "English",
+    "zh-CN": "中文"
+  }
+}

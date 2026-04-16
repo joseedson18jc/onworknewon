@@ -1,0 +1,91 @@
+{
+  "url": "http://localhost:4173/",
+  "capturedAt": "2026-04-16T07:00:24.125Z",
+  "before": {
+    "login": {
+      "vitals": {
+        "lcp": 1228,
+        "cls": 0.049,
+        "fcp": 1228,
+        "ttfb": 858
+      },
+      "a11y": {
+        "unlabeledInputs": 30,
+        "unnamedButtons": 8,
+        "h1Count": 2,
+        "landmarks": 2,
+        "forms": 0,
+        "domNodes": 2304
+      }
+    },
+    "overview": {
+      "vitals": {
+        "lcp": 1896,
+        "cls": 0.392,
+        "fcp": 1288,
+        "ttfb": 905
+      },
+      "a11y": {
+        "unlabeledInputs": 19,
+        "unnamedButtons": 2,
+        "h1Count": 2,
+        "landmarks": 3,
+        "forms": 0,
+        "domNodes": 7732
+      }
+    }
+  },
+  "after": {
+    "login": {
+      "vitals": {
+        "lcp": 1296,
+        "cls": 0,
+        "fcp": 668,
+        "ttfb": 13,
+        "longTasks": 2
+      },
+      "a11y": {
+        "unlabeledInputs": 0,
+        "unnamedButtons": 0,
+        "h1Count": 1,
+        "landmarks": 7,
+        "forms": 1,
+        "domNodes": 87,
+        "skipLink": true
+      },
+      "errors": [],
+      "warnings": [],
+      "failed": []
+    },
+    "overview": {
+      "vitals": {
+        "lcp": 468,
+        "cls": 0,
+        "fcp": 340,
+        "ttfb": 7,
+        "longTasks": 3
+      },
+      "a11y": {
+        "unlabeledInputs": 0,
+        "unnamedButtons": 0,
+        "h1Count": 1,
+        "landmarks": 26,
+        "forms": 0,
+        "domNodes": 495,
+        "skipLink": false
+      },
+      "errors": [],
+      "warnings": [],
+      "failed": []
+    }
+  },
+  "findings": [],
+  "deltas": {
+    "lcpOverview": -1428,
+    "clsOverview": -0.392,
+    "domOverview": -7237,
+    "unlabeledInputsOverview": -19,
+    "unnamedButtonsOverview": -2,
+    "formsLogin": 1
+  }
+}
