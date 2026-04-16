@@ -1,6 +1,6 @@
 {
-  "url": "http://localhost:4173/",
-  "capturedAt": "2026-04-16T07:29:54.844Z",
+  "url": "https://ai-rudder-panel-omega.vercel.app/",
+  "capturedAt": "2026-04-16T08:48:51.780Z",
   "before": {
     "login": {
       "vitals": {
@@ -38,11 +38,11 @@
   "after": {
     "login": {
       "vitals": {
-        "lcp": 544,
+        "lcp": 1512,
         "cls": 0,
-        "fcp": 428,
-        "ttfb": 11,
-        "longTasks": 2
+        "fcp": 900,
+        "ttfb": 117,
+        "longTasks": 3
       },
       "a11y": {
         "unlabeledInputs": 0,
@@ -59,11 +59,11 @@
     },
     "overview": {
       "vitals": {
-        "lcp": 532,
+        "lcp": 1284,
         "cls": 0,
-        "fcp": 412,
-        "ttfb": 6,
-        "longTasks": 3
+        "fcp": 1140,
+        "ttfb": 405,
+        "longTasks": 5
       },
       "a11y": {
         "unlabeledInputs": 0,
@@ -81,7 +81,7 @@
   },
   "findings": [],
   "deltas": {
-    "lcpOverview": -1364,
+    "lcpOverview": -612,
     "clsOverview": -0.392,
     "domOverview": -6593,
     "unlabeledInputsOverview": -19,

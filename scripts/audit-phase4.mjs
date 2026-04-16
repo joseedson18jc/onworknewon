@@ -31,10 +31,12 @@ async function capture(browser, authenticated) {
 
   await page.goto(URL, { waitUntil: 'networkidle', timeout: 20_000 });
   if (authenticated) {
-    // Sign in via demo-mode form
-    await page.fill('input[autocomplete="username"]', 'jose');
-    await page.fill('input[autocomplete="current-password"]', 'demo-mode-any-password');
+    // Sign in via the seeded demo user (admin:admin1234 | demo:demo1234).
+    await page.fill('input[autocomplete="username"]', 'demo');
+    await page.fill('input[autocomplete="current-password"]', 'demo1234');
     await page.click('button[type="submit"]');
+    // Wait for the overview heading, not a fixed timeout — login may take longer against a real server.
+    await page.waitForSelector('h1, h2', { timeout: 15_000 }).catch(() => {});
     await page.waitForTimeout(1500);
   }
 
