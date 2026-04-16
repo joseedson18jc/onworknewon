@@ -8,7 +8,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SparkLine } from '@/components/charts/SparkLine';
 import { formatCurrency } from '@/lib/utils';
-import { login, type Session, type AuthMode } from '@/lib/api';
+import { login, forgotPassword, type Session, type AuthMode } from '@/lib/api';
 
 export interface LoginRouteProps {
   onSignIn: (user: Session) => void;
@@ -22,6 +22,35 @@ export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn, onAuthMode }) 
   const [error, setError] = React.useState<string | undefined>();
   const [warnings, setWarnings] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [forgotOpen, setForgotOpen] = React.useState(false);
+  const [forgotEmail, setForgotEmail] = React.useState('');
+  const [forgotMsg, setForgotMsg] = React.useState<string | null>(null);
+  const [forgotErr, setForgotErr] = React.useState<string | null>(null);
+  const [forgotSending, setForgotSending] = React.useState(false);
+
+  const handleForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setForgotErr(null);
+    setForgotMsg(null);
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forgotEmail);
+    if (!emailOk) {
+      setForgotErr(t('auth.recoveryInvalidEmail'));
+      return;
+    }
+    setForgotSending(true);
+    try {
+      const r = await forgotPassword(forgotEmail);
+      if (r.demoLink) {
+        setForgotMsg(`${t('auth.recoverySent')} (demo link below)`);
+      } else {
+        setForgotMsg(t('auth.recoverySent'));
+      }
+    } catch {
+      setForgotMsg(t('auth.recoverySent')); // Always say sent to prevent enumeration
+    } finally {
+      setForgotSending(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,11 +132,30 @@ export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn, onAuthMode }) 
             </Button>
             <button
               type="button"
-              className="text-xs text-accent hover:text-accent-hover transition-colors"
-              onClick={() => alert(t('auth.recoveryInvalidEmail'))}
+              className="text-xs text-accent hover:text-accent-hover transition-colors self-start"
+              onClick={() => setForgotOpen((v) => !v)}
+              aria-expanded={forgotOpen}
+              aria-controls="forgot-panel"
             >
               {t('auth.forgotPassword')}
             </button>
+            {forgotOpen && (
+              <div id="forgot-panel" className="rounded-sm border border-border-subtle bg-bg-elev-2/40 p-3 -mt-1">
+                <Input
+                  label={t('auth.recoveryEmail')}
+                  type="email"
+                  autoComplete="email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  error={forgotErr ?? undefined}
+                />
+                <Button type="button" variant="secondary" size="sm" className="mt-2" onClick={handleForgot} disabled={forgotSending} aria-busy={forgotSending}>
+                  {forgotSending ? t('common.loading') : t('auth.send')}
+                </Button>
+                {forgotMsg && <p role="status" className="text-xs text-success-500 mt-2">{forgotMsg}</p>}
+              </div>
+            )}
             {warnings.length > 0 ? (
               <ul className="text-[11px] text-warning-500 mt-2 border-t border-border-subtle pt-3 space-y-1">
                 {warnings.map((w, i) => (<li key={i}>⚠ {w}</li>))}

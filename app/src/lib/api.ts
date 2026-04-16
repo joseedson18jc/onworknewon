@@ -73,6 +73,11 @@ export async function me(): Promise<{ user: Session | null; authMode: AuthMode }
 }
 
 export async function forgotPassword(email: string): Promise<{ ok: boolean; warnings?: string[]; demoLink?: string }> {
+  if (!(await detectApi())) {
+    // No /api/*: stub a deterministic demo response so the UI flow still works.
+    await new Promise((r) => setTimeout(r, 250));
+    return { ok: true, warnings: ['Running in client-only demo mode — no email was sent.'], demoLink: `${location.origin}/?reset=demo&email=${encodeURIComponent(email)}` };
+  }
   const res = await fetch('/api/auth/forgot', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

@@ -17,11 +17,35 @@ import { formatCurrency, cn } from '@/lib/utils';
 const columnHelper = createColumnHelper<Account>();
 const tierVariant = (t: 1 | 2 | 3): 'tier1' | 'tier2' | 'tier3' => t === 1 ? 'tier1' : t === 2 ? 'tier2' : 'tier3';
 
-export const AccountsRoute: React.FC<{ focusAccountId?: string | null; onFocusConsumed?: () => void }> = ({ focusAccountId, onFocusConsumed }) => {
+export interface AccountsFilter {
+  tier?: 1 | 2 | 3;
+  sector?: string;
+  minDealSize?: number;
+  maxDealSize?: number;
+  status?: 'champion' | 'neutral' | 'blocker';
+  search?: string;
+}
+
+export interface AccountsRouteProps {
+  focusAccountId?: string | null;
+  onFocusConsumed?: () => void;
+  initialFilter?: AccountsFilter | null;
+  onFilterConsumed?: () => void;
+}
+
+export const AccountsRoute: React.FC<AccountsRouteProps> = ({ focusAccountId, onFocusConsumed, initialFilter, onFilterConsumed }) => {
   const { t, i18n } = useTranslation();
-  const [filter, setFilter] = React.useState('');
+  const [filter, setFilter] = React.useState(initialFilter?.search ?? '');
+  const [facet, setFacet] = React.useState<AccountsFilter | null>(initialFilter ?? null);
   const [sorting, setSorting] = React.useState<SortingState>([{ id: 'rank', desc: false }]);
   const [selected, setSelected] = React.useState<Account | null>(null);
+
+  React.useEffect(() => {
+    if (!initialFilter) return;
+    setFacet(initialFilter);
+    if (initialFilter.search) setFilter(initialFilter.search);
+    onFilterConsumed?.();
+  }, [initialFilter, onFilterConsumed]);
 
   React.useEffect(() => {
     if (!focusAccountId) return;
@@ -29,6 +53,33 @@ export const AccountsRoute: React.FC<{ focusAccountId?: string | null; onFocusCo
     if (a) setSelected(a);
     onFocusConsumed?.();
   }, [focusAccountId, onFocusConsumed]);
+
+  const filteredAccounts = React.useMemo(() => {
+    if (!facet) return ACCOUNTS;
+    return ACCOUNTS.filter((a) => {
+      if (facet.tier && a.tier !== facet.tier) return false;
+      if (facet.sector && a.sector !== facet.sector) return false;
+      if (facet.status && a.status !== facet.status) return false;
+      if (facet.minDealSize !== undefined && a.dealSize < facet.minDealSize) return false;
+      if (facet.maxDealSize !== undefined && a.dealSize > facet.maxDealSize) return false;
+      return true;
+    });
+  }, [facet]);
+
+  const facetLabel = React.useMemo(() => {
+    if (!facet) return null;
+    const parts: string[] = [];
+    if (facet.tier) parts.push(`Tier ${facet.tier}`);
+    if (facet.sector) parts.push(facet.sector);
+    if (facet.status) parts.push(t(`decisionMakers.role.${facet.status}`));
+    if (facet.minDealSize !== undefined || facet.maxDealSize !== undefined) {
+      const fmt = (n: number) => `$${Math.round(n / 1000)}K`;
+      if (facet.minDealSize !== undefined && facet.maxDealSize !== undefined) parts.push(`${fmt(facet.minDealSize)}–${fmt(facet.maxDealSize)}`);
+      else if (facet.minDealSize !== undefined) parts.push(`≥ ${fmt(facet.minDealSize)}`);
+      else if (facet.maxDealSize !== undefined) parts.push(`≤ ${fmt(facet.maxDealSize)}`);
+    }
+    return parts.join(' · ');
+  }, [facet, t]);
 
   const columns = React.useMemo(
     () => [
@@ -94,7 +145,7 @@ export const AccountsRoute: React.FC<{ focusAccountId?: string | null; onFocusCo
   );
 
   const table = useReactTable({
-    data: ACCOUNTS,
+    data: filteredAccounts,
     columns,
     state: { sorting, globalFilter: filter },
     onSortingChange: setSorting,
@@ -119,6 +170,17 @@ export const AccountsRoute: React.FC<{ focusAccountId?: string | null; onFocusCo
         <div>
           <h1 className="font-display text-2xl font-bold">{t('ranking.title')}</h1>
           <p className="text-sm text-text-muted mt-1">{t('ranking.subtitle')}</p>
+          {facetLabel && (
+            <button
+              type="button"
+              onClick={() => setFacet(null)}
+              className="mt-2 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 text-accent px-3 py-1 text-xs font-medium hover:bg-accent/20 transition-colors"
+              aria-label="Clear active filter"
+            >
+              <span>{facetLabel}</span>
+              <span aria-hidden>×</span>
+            </button>
+          )}
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">

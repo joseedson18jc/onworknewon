@@ -7,10 +7,10 @@ const config: Config = {
     container: { center: true, padding: '1.5rem', screens: { '2xl': '1440px' } },
     extend: {
       fontFamily: {
-        display: ['Sora', 'ui-sans-serif', 'system-ui'],
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+        display: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'system-ui'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        cn: ['"Noto Sans SC"', 'Inter', 'ui-sans-serif'],
+        cn: ['"Noto Sans SC"', '"Plus Jakarta Sans"', 'ui-sans-serif'],
       },
       colors: {
         // Brand teal

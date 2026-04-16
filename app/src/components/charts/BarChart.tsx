@@ -11,10 +11,12 @@ export interface BarChartProps {
   barHeight?: number;
   gap?: number;
   formatValue?: (n: number) => string;
+  /** Optional drill-down — fires on bar click. */
+  onBarClick?: (datum: BarDatum) => void;
 }
 
 export const BarChart: React.FC<BarChartProps> = ({
-  data, ariaLabel = 'Bar chart', className, gap = 14, formatValue = (n) => String(n),
+  data, ariaLabel = 'Bar chart', className, gap = 14, formatValue = (n) => String(n), onBarClick,
 }) => {
   const max = Math.max(...data.map((d) => d.value), 1);
   const id = React.useId();
@@ -30,20 +32,31 @@ export const BarChart: React.FC<BarChartProps> = ({
       </svg>
       {data.map((d, i) => {
         const w = (d.value / max) * 100;
+        const Row = onBarClick ? 'button' : 'div';
         return (
-          <div key={i} className="flex items-center gap-3 text-[12px]">
+          <Row
+            key={i}
+            type={onBarClick ? 'button' : undefined}
+            onClick={onBarClick ? () => onBarClick(d) : undefined}
+            aria-label={onBarClick ? `Filter ${d.label} — ${formatValue(d.value)}` : undefined}
+            className={cn(
+              'flex items-center gap-3 text-[12px] w-full text-left',
+              onBarClick && 'rounded-sm px-1 -mx-1 py-0.5 hover:bg-bg-elev-2 transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
+            )}
+          >
             <div className="w-16 shrink-0 text-text-muted mono">{d.label}</div>
             <div className="flex-1 relative h-[14px]">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${w}%` }}
+                whileHover={onBarClick ? { filter: 'brightness(1.15)' } : undefined}
                 transition={{ duration: 0.6, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] }}
                 className="h-full rounded-xs"
                 style={{ background: `url(#${id}), linear-gradient(90deg, rgb(var(--accent) / 0.7), rgb(var(--accent)))` }}
               />
             </div>
             <div className="w-10 text-right mono font-semibold">{formatValue(d.value)}</div>
-          </div>
+          </Row>
         );
       })}
     </div>

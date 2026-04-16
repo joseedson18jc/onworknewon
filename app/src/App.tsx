@@ -26,6 +26,15 @@ const RouteFallback: React.FC = () => (
   </div>
 );
 
+export interface AccountFilter {
+  tier?: 1 | 2 | 3;
+  sector?: string;
+  minDealSize?: number;
+  maxDealSize?: number;
+  status?: 'champion' | 'neutral' | 'blocker';
+  search?: string;
+}
+
 export const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { user, authMode, loading, setUser } = useSession();
@@ -33,6 +42,7 @@ export const App: React.FC = () => {
   const [route, setRoute] = React.useState<RouteKey>('overview');
   const [paletteOpen, setPaletteOpen] = React.useState(false);
   const [focusAccountId, setFocusAccountId] = React.useState<string | null>(null);
+  const [filter, setFilter] = React.useState<AccountFilter | null>(null);
 
   const effectiveMode = modeOverride ?? authMode;
 
@@ -58,6 +68,11 @@ export const App: React.FC = () => {
     if (accountId) setFocusAccountId(accountId);
   };
 
+  const drillDown = (k: RouteKey, f?: AccountFilter) => {
+    setRoute(k);
+    setFilter(f ?? null);
+  };
+
   const toggleTheme = () => {
     const cur = document.documentElement.getAttribute('data-theme');
     const next = cur === 'dark' ? 'light' : 'dark';
@@ -67,9 +82,9 @@ export const App: React.FC = () => {
 
   let content: React.ReactNode;
   if (route === 'overview') {
-    content = <OverviewRoute userName={user.username} />;
+    content = <OverviewRoute userName={user.username} onDrillDown={drillDown} />;
   } else if (route === 'accounts') {
-    content = <AccountsRoute focusAccountId={focusAccountId} onFocusConsumed={() => setFocusAccountId(null)} />;
+    content = <AccountsRoute focusAccountId={focusAccountId} onFocusConsumed={() => setFocusAccountId(null)} initialFilter={filter} onFilterConsumed={() => setFilter(null)} />;
   } else if (route === 'coPilot') {
     content = <CoPilotRoute />;
   } else if (route === 'cadence') {
@@ -86,7 +101,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <TopBar onSignOut={handleSignOut} onOpenPalette={() => setPaletteOpen(true)} />
+      <TopBar onSignOut={handleSignOut} onOpenPalette={() => setPaletteOpen(true)} onLogoClick={() => drillDown('overview')} />
       {effectiveMode === 'demo' && (
         <div role="status" className="bg-warning-500/10 text-warning-500 text-center text-xs font-medium py-1.5 border-b border-warning-500/30">
           ⚠ Demo mode — configure <span className="mono">AUTH_SECRET</span>, <span className="mono">KV_REST_API_*</span>, and provider keys in Vercel for production auth.

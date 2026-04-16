@@ -11,11 +11,34 @@ import { BarChart } from '@/components/charts/BarChart';
 import { Badge } from '@/components/ui/Badge';
 import { ACCOUNTS, KPI, PORTFOLIO, type Account } from '@/data/accounts';
 import { formatNumber } from '@/lib/utils';
+import type { RouteKey } from '@/components/layout/Sidebar';
+import type { AccountFilter } from '@/App';
 
-export const OverviewRoute: React.FC<{ userName: string }> = ({ userName }) => {
+export interface OverviewRouteProps {
+  userName: string;
+  onDrillDown?: (route: RouteKey, filter?: AccountFilter) => void;
+}
+
+/**
+ * Label → Deal-size-range facet. Maps the BarChart category labels ("$500K+",
+ * "$250K", etc.) onto concrete min/max BRL bounds for AccountsRoute filtering.
+ */
+const DEAL_BANDS_BRL: Record<string, { min?: number; max?: number }> = {
+  '$500K+': { min: 2_500_000 },
+  '$250K':  { min: 1_250_000, max: 2_500_000 },
+  '$100K':  { min: 500_000,   max: 1_250_000 },
+  '$50K':   { min: 250_000,   max: 500_000 },
+  '$25K':   { max: 250_000 },
+};
+
+const SECTOR_ALIAS: Record<string, string> = { Banks: 'Bank', Telco: 'Telco', Retail: 'Retail', Other: '' };
+
+export const OverviewRoute: React.FC<OverviewRouteProps> = ({ userName, onDrillDown }) => {
   const { t, i18n } = useTranslation();
   const [selected, setSelected] = React.useState<Account | null>(null);
   const dateStr = new Intl.DateTimeFormat(i18n.language, { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date());
+
+  const goAccounts = (f: AccountFilter) => onDrillDown?.('accounts', f);
 
   return (
     <div className="max-w-[1440px] mx-auto px-6 py-8">
@@ -45,10 +68,10 @@ export const OverviewRoute: React.FC<{ userName: string }> = ({ userName }) => {
       <section aria-labelledby="kpi-h" className="mb-12">
         <h2 id="kpi-h" className="sr-only">{t('overview.title')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label={t('overview.hotLeads')} value={KPI.hotLeads.value} delta={KPI.hotLeads.delta} trend={KPI.hotLeads.trend} color="#44C9C1" delay={0} formatter={(n) => formatNumber(n, i18n.language)} />
-          <StatCard label={t('overview.weeklyMeetings')} value={KPI.weeklyMeetings.value} delta={KPI.weeklyMeetings.delta} trend={KPI.weeklyMeetings.trend} color="#3B82F6" delay={0.05} formatter={(n) => formatNumber(n, i18n.language)} />
-          <StatCard label={t('overview.openProposals')} value={KPI.openProposals.value} delta={KPI.openProposals.delta} trend={KPI.openProposals.trend} color="#F59E0B" delay={0.1} formatter={(n) => formatNumber(n, i18n.language)} />
-          <StatCard label={t('overview.atRiskAccounts')} value={KPI.atRiskAccounts.value} delta={KPI.atRiskAccounts.delta} trend={KPI.atRiskAccounts.trend} color="#EF4444" delay={0.15} formatter={(n) => formatNumber(n, i18n.language)} />
+          <StatCard label={t('overview.hotLeads')} value={KPI.hotLeads.value} delta={KPI.hotLeads.delta} trend={KPI.hotLeads.trend} color="#44C9C1" delay={0} formatter={(n) => formatNumber(n, i18n.language)} onClick={() => goAccounts({ status: 'champion' })} ariaLabel={`${t('overview.hotLeads')} — see champion accounts`} />
+          <StatCard label={t('overview.weeklyMeetings')} value={KPI.weeklyMeetings.value} delta={KPI.weeklyMeetings.delta} trend={KPI.weeklyMeetings.trend} color="#3B82F6" delay={0.05} formatter={(n) => formatNumber(n, i18n.language)} onClick={() => goAccounts({})} ariaLabel={`${t('overview.weeklyMeetings')} — view all accounts`} />
+          <StatCard label={t('overview.openProposals')} value={KPI.openProposals.value} delta={KPI.openProposals.delta} trend={KPI.openProposals.trend} color="#F59E0B" delay={0.1} formatter={(n) => formatNumber(n, i18n.language)} onClick={() => goAccounts({ status: 'neutral' })} ariaLabel={`${t('overview.openProposals')} — see neutral accounts`} />
+          <StatCard label={t('overview.atRiskAccounts')} value={KPI.atRiskAccounts.value} delta={KPI.atRiskAccounts.delta} trend={KPI.atRiskAccounts.trend} color="#EF4444" delay={0.15} formatter={(n) => formatNumber(n, i18n.language)} onClick={() => goAccounts({ status: 'blocker' })} ariaLabel={`${t('overview.atRiskAccounts')} — see at-risk accounts`} />
         </div>
       </section>
 
@@ -63,15 +86,41 @@ export const OverviewRoute: React.FC<{ userName: string }> = ({ userName }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <Card>
             <CardHeader><CardTitle>{t('portfolio.byIcpTier')}</CardTitle></CardHeader>
-            <DonutChart data={PORTFOLIO.byTier} centerValue="59" centerLabel="accounts" ariaLabel="Accounts by ICP tier" />
+            <DonutChart
+              data={PORTFOLIO.byTier}
+              centerValue="59"
+              centerLabel="accounts"
+              ariaLabel="Accounts by ICP tier"
+              onSliceClick={(s) => {
+                const n = parseInt(s.label.replace(/\D/g, ''), 10);
+                if (n === 1 || n === 2 || n === 3) goAccounts({ tier: n as 1 | 2 | 3 });
+              }}
+            />
           </Card>
           <Card>
             <CardHeader><CardTitle>{t('portfolio.bySector')}</CardTitle></CardHeader>
-            <DonutChart data={PORTFOLIO.bySector} centerValue="59" centerLabel="accounts" ariaLabel="Accounts by sector" />
+            <DonutChart
+              data={PORTFOLIO.bySector}
+              centerValue="59"
+              centerLabel="accounts"
+              ariaLabel="Accounts by sector"
+              onSliceClick={(s) => {
+                const sector = SECTOR_ALIAS[s.label] ?? s.label;
+                if (sector) goAccounts({ sector });
+                else goAccounts({});
+              }}
+            />
           </Card>
           <Card>
             <CardHeader><CardTitle>{t('portfolio.dealSizeRange')}</CardTitle></CardHeader>
-            <BarChart data={PORTFOLIO.dealSize} ariaLabel="Deal size range" />
+            <BarChart
+              data={PORTFOLIO.dealSize}
+              ariaLabel="Deal size range"
+              onBarClick={(d) => {
+                const band = DEAL_BANDS_BRL[d.label];
+                if (band) goAccounts({ minDealSize: band.min, maxDealSize: band.max });
+              }}
+            />
           </Card>
         </div>
       </section>
