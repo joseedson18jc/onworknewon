@@ -2,16 +2,27 @@
 
 A Claude Code workspace pre-wired with the skill + MCP stack for **analyzing any webapp and rebuilding it** into a modern, intuitive, chart- and illustration-rich interface — in a closed loop.
 
+## Deploy the rebuilt AI Rudder app
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjoseedson18jc%2Fonworknewon&project-name=ai-rudder&root-directory=app&env=AUTH_SECRET,OPENAI_API_KEY,ELEVENLABS_API_KEY,SURFE_API_KEY&envDescription=Required+for+production.+Leave+blank+to+deploy+in+demo+mode.&envLink=https%3A%2F%2Fgithub.com%2Fjoseedson18jc%2Fonworknewon%2Fblob%2Fmain%2Fapp%2F.env.example)
+
+One click → imports this repo → Vercel auto-detects Vite → set Root Directory to `app/` → add env vars → ship.
+
+Step-by-step instructions + post-deploy verification in **[`DEPLOY.md`](./DEPLOY.md)**.
+
+## Five-phase workflow (applied to AI Rudder · delivered on PR #1)
+
 Drop in a webapp (local source or a live URL), run `start the audit`, and Claude will:
 
 1. **Audit** the app through a real browser — screenshots, console, network, a11y, Core Web Vitals.
 2. **Propose** a full design system tuned to your product's industry (style, palette, typography, charts, illustrations).
 3. **Implement** the redesign — fix bugs, add missing features, add charts/graphs/motion — on the working branch.
 4. **Verify** every change in a closed loop until the audit passes.
+5. **Deploy** (Wave 4+) — server-side auth + API proxies + rate limiting + audit log + Vercel config.
 
-The full operating manual is in [`CLAUDE.md`](./CLAUDE.md).
+The full operating manual is in [`CLAUDE.md`](./CLAUDE.md). The end-to-end audit → redesign → verify → deploy journey for this project is documented in [`reports/audit-2026-04-16.md`](./reports/audit-2026-04-16.md) and [`reports/after-2026-04-16.md`](./reports/after-2026-04-16.md).
 
-## One-time install
+## One-time install (to run the analyzer on a new target)
 
 ### 1. Claude Code plugins
 
