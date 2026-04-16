@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Calendar, Sparkles, Activity } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar } from 'lucide-react';
+import { Card, CardHeader, CardTitle } from '@/components/ui/Card';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { RankingTable } from '@/components/dashboard/RankingTable';
+import { AccountDrawer } from '@/components/dashboard/AccountDrawer';
 import { DonutChart } from '@/components/charts/DonutChart';
 import { BarChart } from '@/components/charts/BarChart';
 import { Badge } from '@/components/ui/Badge';
-import { ACCOUNTS, KPI, PORTFOLIO } from '@/data/accounts';
+import { ACCOUNTS, KPI, PORTFOLIO, type Account } from '@/data/accounts';
 import { formatNumber } from '@/lib/utils';
 
 export const OverviewRoute: React.FC<{ userName: string }> = ({ userName }) => {
   const { t, i18n } = useTranslation();
+  const [selected, setSelected] = React.useState<Account | null>(null);
   const dateStr = new Intl.DateTimeFormat(i18n.language, { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date());
 
   return (
@@ -74,47 +76,21 @@ export const OverviewRoute: React.FC<{ userName: string }> = ({ userName }) => {
         </div>
       </section>
 
-      {/* AI insight */}
-      <motion.section
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.4 }}
-        className="mb-12"
-      >
-        <Card className="relative overflow-hidden border-accent/30 bg-gradient-to-br from-brand-500/10 via-transparent to-info-500/5">
-          <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-accent" />
-          </div>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <span className="font-display">{t('portfolio.aiAnalysis')}</span>
-              <Badge variant="accent" dot className="font-normal">Live</Badge>
-            </CardTitle>
-            <CardDescription>Generated every morning by your AI Co-Pilot.</CardDescription>
-          </CardHeader>
-          <p className="text-[15px] leading-relaxed text-text max-w-[80ch]">
-            <strong className="text-accent">Nubank</strong> is warming up fast — AI score jumped from 82 → 92 in 72 h. Three stakeholders engaged this week, including the CRO. Suggested next move: send the Tier-1 executive briefing today; schedule a discovery call for next Tuesday. <span className="text-text-muted">(Source: #4 account record, 3 briefings, 2 Surfe enrichments · cited.)</span>
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <Badge variant="accent"><Activity className="w-3 h-3" /> +10 AI score this week</Badge>
-            <Badge variant="success" dot>Champion status confirmed</Badge>
-            <Badge variant="info">3 next-steps queued</Badge>
-          </div>
-        </Card>
-      </motion.section>
-
-      {/* ICP ranking */}
+      {/* ICP ranking — every row is clickable → opens AI-powered AccountDrawer */}
       <section aria-labelledby="ranking-h" className="mb-12">
         <div className="flex items-end justify-between gap-4 mb-4">
           <div>
             <h2 id="ranking-h" className="font-display text-2xl font-bold">{t('ranking.title')}</h2>
-            <p className="text-sm text-text-muted mt-1">{t('ranking.subtitle')}</p>
+            <p className="text-sm text-text-muted mt-1">{t('ranking.subtitle')} · click any row for AI intel</p>
           </div>
           <Badge variant="default" className="mono">{ACCOUNTS.length} {t('common.all').toLowerCase()}</Badge>
         </div>
-        <RankingTable accounts={ACCOUNTS} />
+        <RankingTable accounts={ACCOUNTS} onSelect={setSelected} />
       </section>
+
+      <AnimatePresence>
+        {selected && <AccountDrawer account={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </div>
   );
 };

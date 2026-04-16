@@ -3,15 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/Badge';
 import { SparkLine } from '@/components/charts/SparkLine';
+import { LogoAvatar } from '@/components/ui/LogoAvatar';
 import { formatCurrency, cn } from '@/lib/utils';
 import type { Account } from '@/data/accounts';
 
-export interface RankingTableProps { accounts: Account[] }
+export interface RankingTableProps {
+  accounts: Account[];
+  onSelect?: (account: Account) => void;
+}
 
-const tierVariant = (t: 1 | 2 | 3): 'tier1' | 'tier2' | 'tier3' =>
-  t === 1 ? 'tier1' : t === 2 ? 'tier2' : 'tier3';
+const tierVariant = (t: 1 | 2 | 3): 'tier1' | 'tier2' | 'tier3' => t === 1 ? 'tier1' : t === 2 ? 'tier2' : 'tier3';
 
-export const RankingTable: React.FC<RankingTableProps> = ({ accounts }) => {
+export const RankingTable: React.FC<RankingTableProps> = ({ accounts, onSelect }) => {
   const { t, i18n } = useTranslation();
   return (
     <div className="rounded-md border border-border bg-bg-elev overflow-hidden">
@@ -41,34 +44,40 @@ export const RankingTable: React.FC<RankingTableProps> = ({ accounts }) => {
           </thead>
           <tbody>
             {accounts.map((a, i) => {
-              const scoreTone =
-                a.aiScore >= 80 ? 'text-success-500' : a.aiScore >= 60 ? 'text-warning-500' : 'text-danger-500';
-              const trendColor =
-                a.trend[a.trend.length - 1] > a.trend[0]
-                  ? 'rgb(var(--accent))'
-                  : a.trend[a.trend.length - 1] < a.trend[0]
-                    ? '#EF4444'
-                    : '#F59E0B';
+              const scoreTone = a.aiScore >= 80 ? 'text-success-500' : a.aiScore >= 60 ? 'text-warning-500' : 'text-danger-500';
+              const trendColor = a.trend.at(-1)! > a.trend[0]!
+                ? 'rgb(var(--accent))'
+                : a.trend.at(-1)! < a.trend[0]!
+                  ? '#EF4444'
+                  : '#F59E0B';
+              const open = () => onSelect?.(a);
               return (
                 <motion.tr
                   key={a.id}
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: i * 0.03, ease: [0.25, 0.8, 0.25, 1] }}
-                  className="border-t border-border-subtle hover:bg-bg-elev-2/50 transition-colors cursor-pointer"
+                  transition={{ duration: 0.25, delay: Math.min(i * 0.01, 0.3), ease: [0.25, 0.8, 0.25, 1] }}
+                  className={cn(
+                    'border-t border-border-subtle transition-colors',
+                    onSelect && 'cursor-pointer hover:bg-bg-elev-2/50 focus-within:bg-bg-elev-2',
+                  )}
+                  onClick={onSelect ? open : undefined}
                 >
                   <td className="px-4 py-3 mono text-text-muted">{String(a.rank).padStart(2, '0')}</td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-2.5">
-                      <div
-                        aria-hidden
-                        className="w-7 h-7 rounded-sm flex items-center justify-center font-semibold text-[12px] text-white shrink-0"
-                        style={{ background: a.color }}
-                      >
-                        {a.logo}
-                      </div>
+                    <button
+                      type="button"
+                      onClick={onSelect ? (e) => { e.stopPropagation(); open(); } : undefined}
+                      className={cn(
+                        'flex items-center gap-2.5 text-left w-full',
+                        onSelect && 'hover:text-accent transition-colors focus:outline-none',
+                      )}
+                      aria-label={onSelect ? `${t('portfolio.aiAnalysis')} — ${a.name}` : undefined}
+                      disabled={!onSelect}
+                    >
+                      <LogoAvatar domain={a.domain} letter={a.logo} color={a.color} name={a.name} size={28} />
                       <span className="font-medium">{a.name}</span>
-                    </div>
+                    </button>
                   </td>
                   <td className="px-4 py-3">
                     <Badge variant={tierVariant(a.tier)}>T{a.tier}</Badge>

@@ -29,16 +29,79 @@ export interface Account {
   aiScore: number; // 0-100
   trend: number[]; // 11-point sparkline
   status: 'champion' | 'neutral' | 'blocker';
-  logo: string;
-  color: string;
-  domain: string;
+  logo: string; // single-letter fallback
+  color: string; // brand color hint
+  domain: string; // authoritative domain used for Google S2 favicon lookup
   decisionMakers: DecisionMaker[];
   briefings: Briefing[];
 }
 
-// Seeded brand list (keepers from Phase 1 recon) + expanded synthetic accounts so the
-// virtualized table actually has something to virtualize.
-const BASE: Omit<Account, 'decisionMakers' | 'briefings' | 'domain'>[] = [
+// Authoritative domains (used for Google S2 Favicons → real brand logo).
+const LOGO_DOMAINS: Record<string, string> = {
+  nubank: 'nubank.com.br',
+  itau: 'itau.com.br',
+  magalu: 'magazineluiza.com.br',
+  bradesco: 'bradesco.com.br',
+  btg: 'btgpactual.com',
+  xp: 'xpi.com.br',
+  claro: 'claro.com.br',
+  porto: 'portoseguro.com.br',
+  santander: 'santander.com.br',
+  casasbahia: 'casasbahia.com.br',
+  ambev: 'ambev.com.br',
+  vale: 'vale.com',
+  jbs: 'jbs.com.br',
+  petrobras: 'petrobras.com.br',
+  embraer: 'embraer.com',
+  natura: 'natura.com.br',
+  'raia-drogasil': 'rd.com.br',
+  localiza: 'localiza.com',
+  b3: 'b3.com.br',
+  gerdau: 'gerdau.com',
+  weg: 'weg.net',
+  suzano: 'suzano.com.br',
+  hapvida: 'hapvida.com.br',
+  'rede-d-or': 'rededor.com.br',
+  ultrapar: 'ultra.com.br',
+  energisa: 'energisa.com.br',
+  cielo: 'cielo.com.br',
+  totvs: 'totvs.com',
+  vtex: 'vtex.com',
+  stone: 'stone.com.br',
+  pagseguro: 'pagseguro.com.br',
+  alelo: 'alelo.com.br',
+  'mercado-livre-br': 'mercadolivre.com.br',
+  ifood: 'ifood.com.br',
+  loggi: 'loggi.com',
+  'rappi-br': 'rappi.com.br',
+  kavak: 'kavak.com',
+  creditas: 'creditas.com.br',
+  'c6-bank': 'c6bank.com.br',
+  inter: 'bancointer.com.br',
+  'banco-pan': 'bancopan.com.br',
+  'will-bank': 'willbank.com.br',
+  serasa: 'serasa.com.br',
+  'boa-vista': 'boavistaservicos.com.br',
+  'quinto-andar': 'quintoandar.com.br',
+  loft: 'loft.com.br',
+  'olx-br': 'olx.com.br',
+  americanas: 'americanas.com.br',
+  gpa: 'gpabr.com',
+  'carrefour-br': 'carrefour.com.br',
+  'banco-do-brasil': 'bb.com.br',
+  'caixa-econ-mica': 'caixa.gov.br',
+  vivo: 'vivo.com.br',
+  oi: 'oi.com.br',
+  'tim-brasil': 'tim.com.br',
+  'gol-linhas-a-reas': 'voegol.com.br',
+  'azul-linhas-a-reas': 'voeazul.com.br',
+  renner: 'lojasrenner.com.br',
+  via: 'via.com.br',
+  ipiranga: 'ipiranga.com.br',
+};
+
+// Seeded brand list (keepers from Phase 1 recon).
+const BASE: Array<Omit<Account, 'decisionMakers' | 'briefings' | 'domain'>> = [
   { id: 'nubank',     rank: 1,  name: 'Nubank',          tier: 1, sector: 'Fintech',   dealSize: 2_400_000, lastActivity: '2026-04-15', aiScore: 92, trend: [62,65,68,66,70,72,75,78,82,86,92], status: 'champion', logo: 'N', color: '#820AD1' },
   { id: 'itau',       rank: 2,  name: 'Itaú Unibanco',   tier: 1, sector: 'Bank',      dealSize: 1_800_000, lastActivity: '2026-04-14', aiScore: 88, trend: [70,72,74,73,75,78,80,82,85,87,88], status: 'champion', logo: 'I', color: '#EC7000' },
   { id: 'magalu',     rank: 3,  name: 'Magazine Luiza',  tier: 1, sector: 'Retail',    dealSize: 1_100_000, lastActivity: '2026-04-12', aiScore: 84, trend: [80,81,82,83,82,83,84,84,85,84,84], status: 'neutral',  logo: 'M', color: '#0086FF' },
@@ -51,29 +114,49 @@ const BASE: Omit<Account, 'decisionMakers' | 'briefings' | 'domain'>[] = [
   { id: 'casasbahia', rank: 10, name: 'Casas Bahia',     tier: 3, sector: 'Retail',    dealSize: 240_000,   lastActivity: '2026-03-28', aiScore: 42, trend: [58,55,52,50,48,46,45,44,43,42,42], status: 'blocker',  logo: 'C', color: '#0066B3' },
 ];
 
-// 40 more synthetic mid/long-tail accounts so the virtualized table has scale.
+// Expanded Brazilian + regional accounts so the portfolio reaches 60.
 const SYNTHETIC_NAMES = [
   'Ambev', 'Vale', 'JBS', 'Petrobras', 'Embraer', 'Natura', 'Raia Drogasil', 'Localiza',
   'B3', 'Gerdau', 'WEG', 'Suzano', 'Hapvida', 'Rede D\'Or', 'Ultrapar', 'Energisa',
   'Cielo', 'Totvs', 'VTEX', 'Stone', 'PagSeguro', 'Alelo', 'Mercado Livre BR', 'iFood',
   'Loggi', 'Rappi BR', 'Kavak', 'Creditas', 'C6 Bank', 'Inter', 'Banco Pan', 'Will Bank',
   'Serasa', 'Boa Vista', 'Quinto Andar', 'Loft', 'OLX BR', 'Americanas', 'GPA', 'Carrefour BR',
+  'Banco do Brasil', 'Caixa Econômica', 'Vivo', 'Oi', 'TIM Brasil',
+  'Gol Linhas Aéreas', 'Azul Linhas Aéreas', 'Renner', 'Via', 'Ipiranga',
 ];
-const SECTORS = ['Fintech', 'Bank', 'Retail', 'Telco', 'Insurance', 'Finance', 'Logistics', 'Health', 'Energy', 'Industrial'];
+
+const SECTOR_BY_NAME: Record<string, string> = {
+  'Ambev': 'Consumer', 'Vale': 'Industrial', 'JBS': 'Industrial', 'Petrobras': 'Energy',
+  'Embraer': 'Industrial', 'Natura': 'Retail', 'Raia Drogasil': 'Health', 'Localiza': 'Logistics',
+  'B3': 'Finance', 'Gerdau': 'Industrial', 'WEG': 'Industrial', 'Suzano': 'Industrial',
+  'Hapvida': 'Health', 'Rede D\'Or': 'Health', 'Ultrapar': 'Energy', 'Energisa': 'Energy',
+  'Cielo': 'Fintech', 'Totvs': 'Tech', 'VTEX': 'Tech', 'Stone': 'Fintech',
+  'PagSeguro': 'Fintech', 'Alelo': 'Fintech', 'Mercado Livre BR': 'Retail', 'iFood': 'Tech',
+  'Loggi': 'Logistics', 'Rappi BR': 'Tech', 'Kavak': 'Retail', 'Creditas': 'Fintech',
+  'C6 Bank': 'Fintech', 'Inter': 'Fintech', 'Banco Pan': 'Bank', 'Will Bank': 'Fintech',
+  'Serasa': 'Fintech', 'Boa Vista': 'Fintech', 'Quinto Andar': 'Real Estate', 'Loft': 'Real Estate',
+  'OLX BR': 'Tech', 'Americanas': 'Retail', 'GPA': 'Retail', 'Carrefour BR': 'Retail',
+  'Banco do Brasil': 'Bank', 'Caixa Econômica': 'Bank', 'Vivo': 'Telco', 'Oi': 'Telco', 'TIM Brasil': 'Telco',
+  'Gol Linhas Aéreas': 'Travel', 'Azul Linhas Aéreas': 'Travel', 'Renner': 'Retail', 'Via': 'Retail', 'Ipiranga': 'Energy',
+};
+
 const COLORS = ['#6366F1', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#14B8A6', '#0EA5E9', '#F97316', '#A3E635'];
 const STATUSES: Account['status'][] = ['champion', 'neutral', 'blocker'];
 const TIERS: Account['tier'][] = [1, 2, 3];
 function seededRandom(seed: number) { let x = seed; return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; }; }
 const rand = seededRandom(42);
-const synthetic: Omit<Account, 'decisionMakers' | 'briefings' | 'domain'>[] = SYNTHETIC_NAMES.map((name, i) => {
+
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+const synthetic: Array<Omit<Account, 'decisionMakers' | 'briefings' | 'domain'>> = SYNTHETIC_NAMES.map((name, i) => {
   const r = Math.floor(rand() * 100);
   const trend = Array.from({ length: 11 }, (_, j) => Math.max(20, Math.min(95, 50 + (r - 50) * 0.3 + j * 2 + (rand() - 0.5) * 10)));
   return {
-    id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    id: slugify(name),
     rank: 11 + i,
     name,
     tier: TIERS[Math.floor(rand() * 3)]!,
-    sector: SECTORS[Math.floor(rand() * SECTORS.length)]!,
+    sector: SECTOR_BY_NAME[name] ?? 'Industrial',
     dealSize: Math.floor(100_000 + rand() * 900_000),
     lastActivity: new Date(Date.now() - Math.floor(rand() * 30) * 86_400_000).toISOString().slice(0, 10),
     aiScore: Math.floor(35 + rand() * 60),
@@ -110,14 +193,14 @@ function makeDecisionMakers(accountId: string): DecisionMaker[] {
 
 function makeBriefings(account: { id: string; name: string }): Briefing[] {
   const seeds = [
-    { priority: 'high' as const, title: 'AI score jumped +10 this week', summary: 'Three stakeholders engaged including the CRO. Champion status confirmed.', nextAction: 'Send Tier-1 executive briefing today' },
-    { priority: 'medium' as const, title: 'Proposal review scheduled', summary: 'Legal has flagged two clauses for discussion. CFO is aware.', nextAction: 'Prepare red-line response by Friday' },
-    { priority: 'low' as const, title: 'New decision-maker identified', summary: 'VP of Procurement started last month. Champion potential per LinkedIn activity.', nextAction: 'Introduction via mutual connection' },
+    { priority: 'high' as const,   title: 'AI score jumped +10 this week',   summary: 'Three stakeholders engaged including the CRO. Champion status confirmed.', nextAction: 'Send Tier-1 executive briefing today' },
+    { priority: 'medium' as const, title: 'Proposal review scheduled',       summary: 'Legal has flagged two clauses for discussion. CFO is aware.',               nextAction: 'Prepare red-line response by Friday' },
+    { priority: 'low' as const,    title: 'New decision-maker identified',   summary: 'VP of Procurement started last month. Champion potential per LinkedIn activity.', nextAction: 'Introduction via mutual connection' },
   ];
   return seeds.map((s, i) => ({
     id: `${account.id}-brf-${i}`,
     accountId: account.id,
-    title: s.title.replace('this week', account.name.length > 6 ? 'this week' : 'this month'),
+    title: s.title,
     summary: s.summary,
     priority: s.priority,
     nextAction: s.nextAction,
@@ -127,7 +210,7 @@ function makeBriefings(account: { id: string; name: string }): Briefing[] {
 
 export const ACCOUNTS: Account[] = [...BASE, ...synthetic].map((a) => ({
   ...a,
-  domain: `${a.id}.com.br`,
+  domain: LOGO_DOMAINS[a.id] ?? `${a.id}.com.br`,
   decisionMakers: makeDecisionMakers(a.id),
   briefings: makeBriefings({ id: a.id, name: a.name }),
 }));
@@ -172,7 +255,7 @@ export function generateCadence(): Array<{ date: string; count: number }> {
     d.setDate(start.getDate() + i);
     const weekday = d.getDay();
     const baseline = weekday === 0 || weekday === 6 ? 1 : 8;
-    const boost = i > 320 ? 3 : 0; // ramp in the last month
+    const boost = i > 320 ? 3 : 0;
     const count = Math.max(0, Math.floor(baseline + boost + (r() - 0.5) * 8));
     return { date: d.toISOString().slice(0, 10), count };
   });
