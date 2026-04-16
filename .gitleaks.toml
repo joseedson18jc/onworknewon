@@ -1,0 +1,32 @@
+# Gitleaks config for AI Rudder.
+# Default ruleset (OpenAI, GitHub, AWS, Stripe, Slack, generic high-entropy) is
+# extended. Findings fail the CI job.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "elevenlabs-api-key"
+description = "ElevenLabs API key"
+regex = '''xi_[A-Za-z0-9]{32,}'''
+tags = ["elevenlabs"]
+
+[[rules]]
+id = "surfe-api-key"
+description = "Surfe API bearer token (heuristic)"
+regex = '''(?i)(surfe[_-]?api[_-]?key|SURFE_API_KEY)["']?\s*[:=]\s*["']([A-Za-z0-9_-]{24,})["']'''
+tags = ["surfe"]
+
+[allowlist]
+# Allow known-safe strings. Extend as needed.
+regexes = [
+  '''example\.com''',
+]
+paths = [
+  '''app/node_modules/.*''',
+  '''node_modules/.*''',
+  '''package-lock\.json$''',
+  '''\.env\.example$''',
+  '''reports/.*\.(png|jpg|svg)$''',
+  '''design/preview-.*\.html$''',
+]

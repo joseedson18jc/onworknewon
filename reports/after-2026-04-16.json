@@ -1,6 +1,6 @@
 {
   "url": "http://localhost:4173/",
-  "capturedAt": "2026-04-16T07:00:24.125Z",
+  "capturedAt": "2026-04-16T07:15:17.157Z",
   "before": {
     "login": {
       "vitals": {
@@ -38,10 +38,10 @@
   "after": {
     "login": {
       "vitals": {
-        "lcp": 1296,
+        "lcp": 560,
         "cls": 0,
-        "fcp": 668,
-        "ttfb": 13,
+        "fcp": 448,
+        "ttfb": 14,
         "longTasks": 2
       },
       "a11y": {
@@ -50,7 +50,7 @@
         "h1Count": 1,
         "landmarks": 7,
         "forms": 1,
-        "domNodes": 87,
+        "domNodes": 89,
         "skipLink": true
       },
       "errors": [],
@@ -59,19 +59,19 @@
     },
     "overview": {
       "vitals": {
-        "lcp": 468,
+        "lcp": 524,
         "cls": 0,
-        "fcp": 340,
-        "ttfb": 7,
-        "longTasks": 3
+        "fcp": 404,
+        "ttfb": 6,
+        "longTasks": 1
       },
       "a11y": {
         "unlabeledInputs": 0,
         "unnamedButtons": 0,
         "h1Count": 1,
-        "landmarks": 26,
+        "landmarks": 27,
         "forms": 0,
-        "domNodes": 495,
+        "domNodes": 498,
         "skipLink": false
       },
       "errors": [],
@@ -81,9 +81,9 @@
   },
   "findings": [],
   "deltas": {
-    "lcpOverview": -1428,
+    "lcpOverview": -1372,
     "clsOverview": -0.392,
-    "domOverview": -7237,
+    "domOverview": -7234,
     "unlabeledInputsOverview": -19,
     "unnamedButtonsOverview": -2,
     "formsLogin": 1

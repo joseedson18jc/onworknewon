@@ -8,16 +8,19 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SparkLine } from '@/components/charts/SparkLine';
 import { formatCurrency } from '@/lib/utils';
+import { login, type Session, type AuthMode } from '@/lib/api';
 
 export interface LoginRouteProps {
-  onSignIn: (user: { name: string; role: 'admin' | 'viewer' }) => void;
+  onSignIn: (user: Session) => void;
+  onAuthMode?: (m: AuthMode) => void;
 }
 
-export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn }) => {
+export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn, onAuthMode }) => {
   const { t, i18n } = useTranslation();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState<string | undefined>();
+  const [warnings, setWarnings] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,11 +31,17 @@ export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn }) => {
       return;
     }
     setLoading(true);
-    // Demo-mode bypass for the deployed preview: any non-empty input signs you in.
-    // In production this posts to /api/auth/login (see design/new-features.md §2).
-    await new Promise((r) => setTimeout(r, 500));
-    setLoading(false);
-    onSignIn({ name: username, role: username.toLowerCase() === 'demo' ? 'viewer' : 'admin' });
+    try {
+      const res = await login(username, password);
+      setWarnings(res.warnings ?? []);
+      onAuthMode?.(res.authMode);
+      onSignIn(res.user);
+    } catch (err) {
+      const msg = (err as any)?.data?.error;
+      setError(msg === 'rate_limited' ? 'Too many attempts. Please wait a few minutes.' : t('auth.invalidCredentials'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const locale = i18n.language;
@@ -99,9 +108,16 @@ export const LoginRoute: React.FC<LoginRouteProps> = ({ onSignIn }) => {
             >
               {t('auth.forgotPassword')}
             </button>
-            <p className="text-[11px] text-text-faint mt-2 border-t border-border-subtle pt-3">
-              Demo mode · any credentials will sign you in. Production auth is server-side (Argon2id + httpOnly cookie).
-            </p>
+            {warnings.length > 0 ? (
+              <ul className="text-[11px] text-warning-500 mt-2 border-t border-border-subtle pt-3 space-y-1">
+                {warnings.map((w, i) => (<li key={i}>⚠ {w}</li>))}
+              </ul>
+            ) : (
+              <p className="text-[11px] text-text-faint mt-2 border-t border-border-subtle pt-3">
+                Seeded accounts (demo): <span className="mono">admin / admin1234</span> · <span className="mono">demo / demo1234</span>.
+                Server auth uses Argon2id + httpOnly JWT cookie.
+              </p>
+            )}
           </form>
         </motion.div>
 
