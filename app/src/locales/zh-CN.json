@@ -71,6 +71,11 @@
       "lastActivity": "最近活动",
       "aiScore": "AI 评分",
       "nextAction": "下一步行动"
+    },
+    "empty": {
+      "title": "没有符合条件的客户",
+      "body": "请尝试其他名称或行业，或清除当前筛选。",
+      "reset": "清除搜索与筛选"
     }
   },
   "decisionMakers": {

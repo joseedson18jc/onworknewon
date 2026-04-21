@@ -71,6 +71,11 @@
       "lastActivity": "Última atividade",
       "aiScore": "Score IA",
       "nextAction": "Próxima ação"
+    },
+    "empty": {
+      "title": "Nenhuma conta corresponde à sua busca",
+      "body": "Tente outro nome, setor ou limpe o filtro atual.",
+      "reset": "Limpar busca e filtros"
     }
   },
   "decisionMakers": {

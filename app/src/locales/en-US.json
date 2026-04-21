@@ -71,6 +71,11 @@
       "lastActivity": "Last activity",
       "aiScore": "AI Score",
       "nextAction": "Next action"
+    },
+    "empty": {
+      "title": "No accounts match your search",
+      "body": "Try a different name, sector, or clear the current filter.",
+      "reset": "Clear search & filters"
     }
   },
   "decisionMakers": {

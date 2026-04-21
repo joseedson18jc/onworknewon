@@ -16,3 +16,12 @@ export function formatNumber(value: number, locale: string = 'pt-BR') {
 export function formatCompact(value: number, locale: string = 'pt-BR') {
   return new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(value);
 }
+
+// Strips diacritics so "itau" finds "Itaú Unibanco" and "sao paulo" finds "São Paulo".
+export function normalizeForSearch(value: unknown): string {
+  if (value == null) return '';
+  return String(value)
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase();
+}

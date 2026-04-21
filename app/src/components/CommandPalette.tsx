@@ -8,7 +8,15 @@ import {
 } from 'lucide-react';
 import { ACCOUNTS } from '@/data/accounts';
 import type { RouteKey } from '@/components/layout/Sidebar';
-import { cn } from '@/lib/utils';
+import { cn, normalizeForSearch } from '@/lib/utils';
+
+// Diacritic-insensitive multi-token match ("itau un" → "Itaú Unibanco").
+const paletteFilter = (value: string, search: string): number => {
+  const needle = normalizeForSearch(search).trim();
+  if (!needle) return 1;
+  const haystack = normalizeForSearch(value);
+  return needle.split(/\s+/).every((tok) => haystack.includes(tok)) ? 1 : 0;
+};
 
 interface Props {
   open: boolean;
@@ -52,6 +60,7 @@ export const CommandPalette: React.FC<Props> = ({ open, onOpenChange, onNavigate
           open={open}
           onOpenChange={onOpenChange}
           label="Command palette"
+          filter={paletteFilter}
           className="fixed inset-0 z-50 flex items-start justify-center pt-[12vh] px-4"
           contentClassName="w-full max-w-[640px]"
           overlayClassName="fixed inset-0 bg-navy-900/70 backdrop-blur-sm"
@@ -92,10 +101,10 @@ export const CommandPalette: React.FC<Props> = ({ open, onOpenChange, onNavigate
               </Command.Group>
 
               <Command.Group heading="Accounts" className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.06em] [&_[cmdk-group-heading]]:text-text-faint">
-                {ACCOUNTS.slice(0, 30).map((a) => (
+                {ACCOUNTS.map((a) => (
                   <Command.Item
                     key={a.id}
-                    value={`account ${a.name} ${a.sector}`}
+                    value={`account ${a.name} ${a.sector} ${a.status} tier${a.tier} ${a.domain}`}
                     onSelect={() => { onNavigate('accounts', a.id); onOpenChange(false); }}
                     className="flex items-center gap-3 rounded-sm px-2 py-2 text-sm cursor-pointer data-[selected=true]:bg-accent/10 data-[selected=true]:text-accent"
                   >

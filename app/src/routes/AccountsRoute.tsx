@@ -3,16 +3,27 @@ import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import {
   createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel,
-  getSortedRowModel, useReactTable, type SortingState,
+  getSortedRowModel, useReactTable, type FilterFn, type Row, type SortingState,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { ArrowUp, ArrowDown, Search } from 'lucide-react';
+import { ArrowUp, ArrowDown, Search, SearchX } from 'lucide-react';
 import { ACCOUNTS, type Account } from '@/data/accounts';
 import { Badge } from '@/components/ui/Badge';
 import { LogoAvatar } from '@/components/ui/LogoAvatar';
 import { SparkLine } from '@/components/charts/SparkLine';
 import { AccountDrawer } from '@/components/dashboard/AccountDrawer';
-import { formatCurrency, cn } from '@/lib/utils';
+import { formatCurrency, cn, normalizeForSearch } from '@/lib/utils';
+
+// Search across name, sector, tier, status, and domain with diacritic-insensitive matching.
+const fuzzyAccountFilter: FilterFn<Account> = (row: Row<Account>, _columnId, rawValue) => {
+  const needle = normalizeForSearch(rawValue).trim();
+  if (!needle) return true;
+  const a = row.original;
+  const haystack = normalizeForSearch(
+    `${a.name} ${a.sector} ${a.status} tier${a.tier} t${a.tier} ${a.domain} ${a.logo}`,
+  );
+  return needle.split(/\s+/).every((tok) => haystack.includes(tok));
+};
 
 const columnHelper = createColumnHelper<Account>();
 const tierVariant = (t: 1 | 2 | 3): 'tier1' | 'tier2' | 'tier3' => t === 1 ? 'tier1' : t === 2 ? 'tier2' : 'tier3';
@@ -150,6 +161,7 @@ export const AccountsRoute: React.FC<AccountsRouteProps> = ({ focusAccountId, on
     state: { sorting, globalFilter: filter },
     onSortingChange: setSorting,
     onGlobalFilterChange: setFilter,
+    globalFilterFn: fuzzyAccountFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -227,28 +239,51 @@ export const AccountsRoute: React.FC<AccountsRouteProps> = ({ focusAccountId, on
             </div>
 
             <div ref={parentRef} className="max-h-[640px] overflow-y-auto" role="rowgroup">
-              <div style={{ height: rowVirtualizer.getTotalSize(), position: 'relative' }}>
-                {rowVirtualizer.getVirtualItems().map((v) => {
-                  const row = rows[v.index]!;
-                  return (
-                    <div
-                      key={row.id}
-                      role="row"
-                      tabIndex={0}
-                      onClick={() => setSelected(row.original)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(row.original); } }}
-                      style={{ position: 'absolute', top: 0, left: 0, height: v.size, transform: `translateY(${v.start}px)` }}
-                      className="flex w-full border-t border-border-subtle hover:bg-bg-elev-2/50 cursor-pointer transition-colors focus:outline-none focus-visible:bg-bg-elev-2 focus-visible:ring-1 focus-visible:ring-accent"
+              {rows.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-3 py-16 px-6 text-center">
+                  <span aria-hidden className="w-10 h-10 rounded-full bg-bg-elev-2 border border-border-subtle flex items-center justify-center">
+                    <SearchX className="w-4 h-4 text-text-muted" />
+                  </span>
+                  <p className="text-sm text-text">
+                    {t('ranking.empty.title', { defaultValue: 'No accounts match your search' })}
+                  </p>
+                  <p className="text-xs text-text-muted max-w-[40ch]">
+                    {t('ranking.empty.body', { defaultValue: 'Try a different name, sector, or clear the current filter.' })}
+                  </p>
+                  {(filter || facet) && (
+                    <button
+                      type="button"
+                      onClick={() => { setFilter(''); setFacet(null); }}
+                      className="mt-1 inline-flex items-center gap-2 rounded-sm border border-border bg-bg-elev px-3 py-1.5 text-xs font-medium hover:border-accent/60 hover:text-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
                     >
-                      {row.getVisibleCells().map((cell) => (
-                        <div key={cell.id} style={{ width: cell.column.getSize() }} className="px-4 py-3 flex items-center text-[13px]">
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })}
-              </div>
+                      {t('ranking.empty.reset', { defaultValue: 'Clear search & filters' })}
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div style={{ height: rowVirtualizer.getTotalSize(), position: 'relative' }}>
+                  {rowVirtualizer.getVirtualItems().map((v) => {
+                    const row = rows[v.index]!;
+                    return (
+                      <div
+                        key={row.id}
+                        role="row"
+                        tabIndex={0}
+                        onClick={() => setSelected(row.original)}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(row.original); } }}
+                        style={{ position: 'absolute', top: 0, left: 0, height: v.size, transform: `translateY(${v.start}px)` }}
+                        className="flex w-full border-t border-border-subtle hover:bg-bg-elev-2/50 cursor-pointer transition-colors focus:outline-none focus-visible:bg-bg-elev-2 focus-visible:ring-1 focus-visible:ring-accent"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <div key={cell.id} style={{ width: cell.column.getSize() }} className="px-4 py-3 flex items-center text-[13px]">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
