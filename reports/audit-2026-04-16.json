@@ -1,0 +1,301 @@
+{
+  "url": "https://ai-rudder-panel-josemercadogc18-1904s-projects.vercel.app",
+  "capturedAt": "2026-04-16T02:31:29.407Z",
+  "viewports": {
+    "mobile": {
+      "width": 375,
+      "height": 812,
+      "file": "reports/screenshots-2026-04-16/mobile-375x812.png"
+    },
+    "tablet": {
+      "width": 768,
+      "height": 1024,
+      "file": "reports/screenshots-2026-04-16/tablet-768x1024.png"
+    },
+    "laptop": {
+      "width": 1280,
+      "height": 800,
+      "file": "reports/screenshots-2026-04-16/laptop-1280x800.png"
+    },
+    "desktop": {
+      "width": 1536,
+      "height": 960,
+      "file": "reports/screenshots-2026-04-16/desktop-1536x960.png"
+    }
+  },
+  "console": {
+    "errors": [],
+    "warnings": [],
+    "logs": []
+  },
+  "network": {
+    "failed": [],
+    "slow": [],
+    "requestCount": 6,
+    "totalBytes": 1058448
+  },
+  "webVitals": {
+    "lcp": 1228,
+    "cls": 0.049,
+    "fcp": 1228,
+    "ttfb": 858,
+    "longTasks": 2
+  },
+  "a11y": {
+    "landmarks": [
+      {
+        "tag": "aside",
+        "role": null,
+        "label": null
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "label": null
+      }
+    ],
+    "headings": [
+      {
+        "level": 1,
+        "text": "Bem-vindo de volta\n      Welcome back"
+      },
+      {
+        "level": 1,
+        "text": "Inteligência para cada conversa comercial.\n        Intelligence for every sales "
+      },
+      {
+        "level": 2,
+        "text": "Visão geralOverview"
+      },
+      {
+        "level": 2,
+        "text": "Portfolio BreakdownPortfolio Breakdown"
+      },
+      {
+        "level": 4,
+        "text": "Por Tier ICPBy ICP Tier"
+      },
+      {
+        "level": 4,
+        "text": "Por SetorBy Sector"
+      },
+      {
+        "level": 4,
+        "text": "Faixa de Ticket (US$K/ano · top 10)Deal Size Range ($K/yr · top 10)"
+      },
+      {
+        "level": 4,
+        "text": "Análise IAAI Analysis"
+      },
+      {
+        "level": 2,
+        "text": "Ranking ICPICP Ranking"
+      },
+      {
+        "level": 3,
+        "text": "As 10 contas que movem o trimestre.The 10 accounts that move the quarter."
+      },
+      {
+        "level": 2,
+        "text": "Decisores -chaveKey Decision Makers"
+      },
+      {
+        "level": 3,
+        "text": "Quem manda em cada conta.Who holds the power in each account."
+      },
+      {
+        "level": 2,
+        "text": "Briefings prioritáriosPriority briefings"
+      },
+      {
+        "level": 3,
+        "text": "Todas as contas no radarAll accounts on radar"
+      },
+      {
+        "level": 5,
+        "text": "Enriquecimento em massa via Surfe APIBulk Surfe API enrichment"
+      },
+      {
+        "level": 2,
+        "text": "AI Co-Pilot"
+      },
+      {
+        "level": 3,
+        "text": "Seu copiloto para cada conversa comercial.Your co-pilot for every sales conversa"
+      },
+      {
+        "level": 2,
+        "text": "Cadência inteligenteSmart cadence"
+      },
+      {
+        "level": 2,
+        "text": "Próximos passosNext steps"
+      },
+      {
+        "level": 2,
+        "text": "Surfe · Prospector"
+      },
+      {
+        "level": 3,
+        "text": "Prospecção inteligente — em tempo real.Smart prospecting — in real time."
+      },
+      {
+        "level": 2,
+        "text": "Perfil do Cliente IdealIdeal Customer Profile"
+      },
+      {
+        "level": 3,
+        "text": "Perfil da EmpresaCompany Profile"
+      },
+      {
+        "level": 3,
+        "text": "Decisores-ChaveDecision Makers"
+      },
+      {
+        "level": 2,
+        "text": "Mapa de DoresPain Map"
+      },
+      {
+        "level": 4,
+        "text": "Intensidade das dores (escala 0–10)Pain intensity (0–10 scale)"
+      },
+      {
+        "level": 2,
+        "text": "AI Rudder vs. Incumbentes BRAI Rudder vs. Brazil Incumbents"
+      },
+      {
+        "level": 3,
+        "text": "Radar de CapacidadesCapability Radar"
+      },
+      {
+        "level": 3,
+        "text": "Resumo CompetitivoCompetitive Summary"
+      },
+      {
+        "level": 4,
+        "text": "Locais: Zenvia, Blip, TakeLocal: Zenvia, Blip, Take"
+      },
+      {
+        "level": 4,
+        "text": "Globais: Genesys, Five9, NICEGlobal: Genesys, Five9, NICE"
+      },
+      {
+        "level": 4,
+        "text": "Vantagem AI RudderAI Rudder Advantage"
+      },
+      {
+        "level": 4,
+        "text": "Insight de IAAI Insight"
+      },
+      {
+        "level": 2,
+        "text": "Playbook de EntradaRecommended Entry Playbook"
+      },
+      {
+        "level": 4,
+        "text": "Beachhead — FintechsBeachhead — Fintechs"
+      },
+      {
+        "level": 4,
+        "text": "Expansão — Bancos & BPOsExpansion — Banks & BPOs"
+      },
+      {
+        "level": 4,
+        "text": "Escala — Full MarketScale — Full Market"
+      },
+      {
+        "level": 4,
+        "text": "Fatores Críticos de SucessoCritical Success Factors"
+      },
+      {
+        "level": 2,
+        "text": "TAM & Potencial de CapturaAddressable Market & Capture Forecast"
+      },
+      {
+        "level": 4,
+        "text": "TAM por Tier (US$M)TAM by Tier ($M)"
+      },
+      {
+        "level": 4,
+        "text": "Trajetória de Captura de ReceitaRevenue Capture Trajectory"
+      },
+      {
+        "level": 2,
+        "text": "Notas · Sales TeamNotes · Sales Team"
+      },
+      {
+        "level": 3,
+        "text": "Notas salvasSaved notes"
+      },
+      {
+        "level": 3,
+        "text": "—"
+      },
+      {
+        "level": 3,
+        "text": "Surfe · API KeySurfe · API Key"
+      },
+      {
+        "level": 3,
+        "text": "OpenAI · API KeyOpenAI · API Key"
+      },
+      {
+        "level": 3,
+        "text": "—"
+      },
+      {
+        "level": 3,
+        "text": "Assistente IA · AI RudderAI Assistant · AI Rudder"
+      }
+    ],
+    "imgsNoAlt": [],
+    "inputsNoLabel": [
+      "<input id=\"forgotEmail\" type=\"email\" placeholder=\"you@company.com\" autocomplete=\"email\">",
+      "<input id=\"briefSearch\" class=\"search-inp\" type=\"search\" placeholder=\"\">",
+      "<input id=\"spJob\" autocomplete=\"off\" placeholder=\"VP Customer Experience, Head of Fraud, Director of CX\">",
+      "<select id=\"spSen\" multiple=\"\" size=\"4\">\n                <option value=\"C-Level\">C-Level</option><option value=\"VP\" selected=\"\">VP</option>\n                <opt",
+      "<input id=\"spDept\" autocomplete=\"off\" placeholder=\"customer_experience, operations, data, risk\">",
+      "<input id=\"spDomains\" autocomplete=\"off\" placeholder=\"vivo.com.br, bancointer.com.br, stone.com.br\">",
+      "<input id=\"spInd\" autocomplete=\"off\" placeholder=\"Telecommunications, Banking, Financial Services\">",
+      "<input id=\"spCountries\" autocomplete=\"off\" value=\"BR\" placeholder=\"BR, US, MX\">",
+      "<select id=\"spSize\">\n                <option value=\"\">—</option><option value=\"51-200\">51-200</option>\n                <option value=\"201-500\">201-500</option><",
+      "<input id=\"spLimit\" type=\"number\" min=\"1\" max=\"100\" value=\"25\">",
+      "<input id=\"soInd\" autocomplete=\"off\" placeholder=\"Telecommunications, Banking, Financial Services, Insurance\">",
+      "<input id=\"soCountries\" autocomplete=\"off\" value=\"BR\" placeholder=\"BR, US, MX\">",
+      "<select id=\"soSize\">\n                <option value=\"\">—</option><option value=\"201-500\">201-500</option>\n                <option value=\"501-1000\">501-1000</opti",
+      "<input id=\"soRev\" autocomplete=\"off\" type=\"number\" placeholder=\"50000000\">",
+      "<input id=\"soTech\" autocomplete=\"off\" placeholder=\"Salesforce, Genesys, AWS\">",
+      "<input id=\"soLimit\" autocomplete=\"off\" type=\"number\" min=\"1\" max=\"100\" value=\"20\">",
+      "<input id=\"epInput\" placeholder=\"https://www.linkedin.com/in/carolina-m  —  or  —  carolina.m@vivo.br\">",
+      "<input id=\"epName\" placeholder=\"Carolina Monteiro\">",
+      "<input id=\"epDomain\" placeholder=\"vivo.com.br\">",
+      "<input id=\"eoInput\" placeholder=\"vivo.com.br\">",
+      "<input id=\"lkInput\" placeholder=\"vivo.com.br\">",
+      "<input id=\"lkLimit\" type=\"number\" min=\"1\" max=\"50\" value=\"15\">",
+      "<input id=\"aiQaInput\" type=\"text\" placeholder=\"\" autocomplete=\"off\">",
+      "<input type=\"text\" id=\"noteTitle\" placeholder=\"e.g., Vivo · Reunião com Carolina M.\" style=\"width:100%;padding:10px;border:1px solid var(--border);border-radius",
+      "<textarea id=\"noteText\" placeholder=\"Cole aqui os detalhes da conversa, pontos-chave e próximos passos...\" style=\"width:100%;height:200px;padding:12px;border:1p",
+      "<input id=\"surfeKeyInput\" type=\"password\" placeholder=\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\">",
+      "<input id=\"surfeBaseInput\" value=\"https://api.surfe.com\" placeholder=\"https://api.surfe.com\">",
+      "<input id=\"surfeProxyInput\" placeholder=\"https://your-worker.workers.dev/?url=\">",
+      "<input id=\"notesKeyInput\" type=\"password\" placeholder=\"sk-proj-...\">",
+      "<input id=\"aiDrawerInput\" type=\"text\" placeholder=\"\" autocomplete=\"off\">"
+    ],
+    "buttonsNoName": 8,
+    "docLang": "pt-BR",
+    "title": "AI Rudder — Sales Intelligence Panel"
+  },
+  "meta": {
+    "loadMs": 1704,
+    "title": "AI Rudder — Sales Intelligence Panel",
+    "description": "AI Rudder — Sales Intelligence Panel. Client-side dashboard for sales intelligence, notes processing (OpenAI), voice (ElevenLabs) and enrichment (Surfe).",
+    "viewport": "width=device-width, initial-scale=1.0",
+    "charset": "UTF-8",
+    "scripts": 4,
+    "stylesheets": 1,
+    "inlineScriptsBytes": 324889,
+    "domNodes": 2304,
+    "hasDarkMode": true,
+    "prefersReducedMotionRespected": true
+  }
+}

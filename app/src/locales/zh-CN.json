@@ -1,0 +1,151 @@
+{
+  "brand": {
+    "name": "AI Rudder",
+    "tagline": "面向巴西销售团队的销售智能助手（2026-2027）——待高层管理层批准。"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signedInSubtitle": "私密面板 · 请登录以继续",
+    "welcomeBack": "欢迎回来",
+    "username": "用户名",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "recoveryEmail": "找回邮箱",
+    "send": "发送",
+    "invalidCredentials": "凭证无效,请检查用户名和密码。",
+    "recoverySent": "如果该邮箱存在,已发送找回链接。",
+    "recoveryInvalidEmail": "请输入有效的邮箱地址。",
+    "signOut": "退出登录",
+    "sessionExpired": "会话已过期,请重新登录。"
+  },
+  "nav": {
+    "panel": "面板",
+    "context": "上下文",
+    "accounts": "客户",
+    "icpRanking": "ICP 排名",
+    "briefings": "简报",
+    "coPilot": "AI 副驾",
+    "cadence": "节奏",
+    "nextSteps": "下一步",
+    "surfe": "Surfe · 开发者",
+    "portfolio": "ICP 组合",
+    "decisionMap": "决策地图",
+    "competitive": "竞争分析",
+    "goToMarket": "市场策略",
+    "notes": "笔记",
+    "meta": "目标",
+    "settings": "设置"
+  },
+  "overview": {
+    "title": "概览",
+    "hero": "为每一次销售对话提供情报。",
+    "subtitle": "实时呈现关键客户——答案、背景和下一步行动随时就绪。",
+    "dealsUpdated": "已更新交易",
+    "pipelineValue": "管道价值",
+    "slaAvg": "平均 SLA",
+    "slaHelper": "每 150 次联系测量一次（24 小时）",
+    "hotLeads": "热门线索",
+    "weeklyMeetings": "本周会议",
+    "openProposals": "进行中的提案",
+    "atRiskAccounts": "高风险客户",
+    "briefingOfTheDay": "每日简报",
+    "wakeUp": "唤醒",
+    "goToStandUp": "开始站会"
+  },
+  "portfolio": {
+    "title": "组合分析",
+    "byIcpTier": "按 ICP 层级",
+    "bySector": "按行业",
+    "dealSizeRange": "交易规模分布（千美元/年 · 前 10）",
+    "aiAnalysis": "AI 分析"
+  },
+  "ranking": {
+    "title": "ICP 排名",
+    "subtitle": "驱动本季度的 10 个重点客户。",
+    "column": {
+      "rank": "排名",
+      "account": "客户",
+      "tier": "层级",
+      "sector": "行业",
+      "dealSize": "交易规模",
+      "lastActivity": "最近活动",
+      "aiScore": "AI 评分",
+      "nextAction": "下一步行动"
+    },
+    "empty": {
+      "title": "没有符合条件的客户",
+      "body": "请尝试其他名称或行业，或清除当前筛选。",
+      "reset": "清除搜索与筛选"
+    }
+  },
+  "decisionMakers": {
+    "title": "关键决策者",
+    "subtitle": "每个客户的话语权掌握者。",
+    "role": {
+      "champion": "推动者",
+      "neutral": "中立者",
+      "blocker": "阻碍者",
+      "unknown": "未知"
+    }
+  },
+  "briefings": {
+    "title": "优先简报",
+    "allAccounts": "雷达上的所有客户",
+    "generateBriefing": "生成简报"
+  },
+  "surfe": {
+    "title": "Surfe · 开发者",
+    "bulkEnrichment": "通过 Surfe API 批量丰富数据",
+    "apiKey": "API 密钥",
+    "jobTitle": "职位",
+    "sweetSpotBR": "最佳规模：R$ 20 亿以上",
+    "sweetSpotIntl": "最佳规模：200 万以上"
+  },
+  "coPilot": {
+    "title": "AI 副驾",
+    "subtitle": "您每次销售对话的副驾。",
+    "placeholder": "询问任何客户、简报或节奏相关的问题……",
+    "send": "发送",
+    "listen": "聆听",
+    "stopListening": "停止",
+    "speak": "朗读"
+  },
+  "cadence": {
+    "title": "智能节奏",
+    "heatmap": "活动热力图"
+  },
+  "empty": {
+    "noBriefings": {
+      "title": "没有待处理的简报",
+      "body": "您的客户状态良好。也许可以主动联系一下。",
+      "cta": "查看所有客户"
+    },
+    "noAccounts": {
+      "title": "暂无客户",
+      "body": "使用 Surfe 丰富客户列表,或上传 CSV 文件开始。",
+      "cta": "导入客户"
+    }
+  },
+  "common": {
+    "loading": "加载中……",
+    "error": "出了点问题。",
+    "retry": "重试",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "filter": "筛选",
+    "all": "全部",
+    "today": "今天",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "lastUpdated": "更新于 {date}",
+    "viewAsTable": "以表格形式查看"
+  },
+  "language": {
+    "pt-BR": "Português",
+    "en-US": "English",
+    "zh-CN": "中文"
+  }
+}

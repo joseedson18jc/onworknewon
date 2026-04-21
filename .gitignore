@@ -1,0 +1,25 @@
+node_modules/
+dist/
+build/
+out/
+.next/
+.turbo/
+.cache/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Playwright / Storybook artifacts
+test-results/
+playwright-report/
+storybook-static/
+
+# Reports — keep markdown, ignore raw screenshots over threshold
+reports/raw/
+reports/**/*.webm
+reports/**/*.zip
+# DOM snapshots can contain secrets baked into client-side JS — never commit
+reports/**/dom.html

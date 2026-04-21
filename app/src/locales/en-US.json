@@ -1,0 +1,151 @@
+{
+  "brand": {
+    "name": "AI Rudder",
+    "tagline": "Sales personal assistant for Brazil's Sales Team (2026-2027) — pending senior management approval."
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signedInSubtitle": "Private panel · sign in to continue",
+    "welcomeBack": "Welcome back",
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "recoveryEmail": "Recovery email",
+    "send": "Send",
+    "invalidCredentials": "Invalid credentials. Please check username and password.",
+    "recoverySent": "If the email exists, a recovery link has been sent.",
+    "recoveryInvalidEmail": "Please enter a valid email.",
+    "signOut": "Sign out",
+    "sessionExpired": "Session expired. Please sign in again."
+  },
+  "nav": {
+    "panel": "Panel",
+    "context": "Context",
+    "accounts": "Accounts",
+    "icpRanking": "ICP Ranking",
+    "briefings": "Briefings",
+    "coPilot": "AI Co-Pilot",
+    "cadence": "Cadence",
+    "nextSteps": "Next steps",
+    "surfe": "Surfe · Prospector",
+    "portfolio": "ICP Portfolio",
+    "decisionMap": "Decision Map",
+    "competitive": "Competitive",
+    "goToMarket": "Go-to-Market",
+    "notes": "Notes",
+    "meta": "Goals",
+    "settings": "Settings"
+  },
+  "overview": {
+    "title": "Overview",
+    "hero": "Intelligence for every sales conversation.",
+    "subtitle": "A live panel of the accounts that matter — answers, context, and the next move always ready.",
+    "dealsUpdated": "Deals updated",
+    "pipelineValue": "Pipeline value",
+    "slaAvg": "Avg. SLA",
+    "slaHelper": "Measured every 150 contacts (24h)",
+    "hotLeads": "Hot leads",
+    "weeklyMeetings": "Weekly meetings",
+    "openProposals": "Open proposals",
+    "atRiskAccounts": "At-risk accounts",
+    "briefingOfTheDay": "Briefing of the day",
+    "wakeUp": "Wake up",
+    "goToStandUp": "Go to stand-up"
+  },
+  "portfolio": {
+    "title": "Portfolio Breakdown",
+    "byIcpTier": "By ICP Tier",
+    "bySector": "By Sector",
+    "dealSizeRange": "Deal Size Range ($K/yr · top 10)",
+    "aiAnalysis": "AI Analysis"
+  },
+  "ranking": {
+    "title": "ICP Ranking",
+    "subtitle": "The 10 accounts that move the quarter.",
+    "column": {
+      "rank": "Rank",
+      "account": "Account",
+      "tier": "Tier",
+      "sector": "Sector",
+      "dealSize": "Deal Size",
+      "lastActivity": "Last activity",
+      "aiScore": "AI Score",
+      "nextAction": "Next action"
+    },
+    "empty": {
+      "title": "No accounts match your search",
+      "body": "Try a different name, sector, or clear the current filter.",
+      "reset": "Clear search & filters"
+    }
+  },
+  "decisionMakers": {
+    "title": "Key Decision Makers",
+    "subtitle": "Who holds the power in each account.",
+    "role": {
+      "champion": "Champion",
+      "neutral": "Neutral",
+      "blocker": "Blocker",
+      "unknown": "Unknown"
+    }
+  },
+  "briefings": {
+    "title": "Priority briefings",
+    "allAccounts": "All accounts on radar",
+    "generateBriefing": "Generate briefing"
+  },
+  "surfe": {
+    "title": "Surfe · Prospector",
+    "bulkEnrichment": "Bulk enrichment via Surfe API",
+    "apiKey": "API key",
+    "jobTitle": "Job title",
+    "sweetSpotBR": "Sweet spot: R$ 2B+",
+    "sweetSpotIntl": "Sweet spot: 2M+"
+  },
+  "coPilot": {
+    "title": "AI Co-Pilot",
+    "subtitle": "Your co-pilot for every sales conversation.",
+    "placeholder": "Ask anything about any account, briefing, or cadence…",
+    "send": "Send",
+    "listen": "Listen",
+    "stopListening": "Stop",
+    "speak": "Read aloud"
+  },
+  "cadence": {
+    "title": "Smart cadence",
+    "heatmap": "Activity heatmap"
+  },
+  "empty": {
+    "noBriefings": {
+      "title": "No pending briefings",
+      "body": "Your accounts are in good shape. Maybe call someone.",
+      "cta": "View all accounts"
+    },
+    "noAccounts": {
+      "title": "No accounts yet",
+      "body": "Start by enriching an account list with Surfe or upload a CSV.",
+      "cta": "Import accounts"
+    }
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "today": "Today",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "lastUpdated": "Updated {date}",
+    "viewAsTable": "View as table"
+  },
+  "language": {
+    "pt-BR": "Português",
+    "en-US": "English",
+    "zh-CN": "中文"
+  }
+}
